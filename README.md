@@ -1,3 +1,9 @@
 # BGJ 2025.2
 
-**FONTOS**: Merge conflictokat viszonylag nehéz a scene fájlokban kezelni, ezért ha a változtatásaid érintik a scene-t is, akkor először másold le a *Main* scene-t (ami a teljes játékot tartalmazza), nevezd el úgy, hogy látszódjon, hogy a tiéd és abban dolgozz a branch-en, amit a tasknak létrehoztál. Aztán, ha visszamerge-eltél a *main* branch-re, ott vidd át a sajád scene-edből *Main*-be a változtatásokat és úgy commitold be.
+itch.io oldal: [https://vdor01.itch.io/bgj-2025-2](https://vdor01.itch.io/bgj-2025-2)
+<details>
+  <summary>Jelszó (annak, aki nincs hozzáadva)</summary>
+  BGJ 2025.2
+</details>
+
+Különféle információk és egyebek megtalálhatóak a [Wiki](https://github.com/Vdor01/BGJ-2025.2/wiki)-n
