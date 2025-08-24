@@ -1,3 +1,5 @@
+using BGJ_2025_2.Game;
+using BGJ_2025_2.Game.Players;
 using UnityEngine;
 
 namespace BGJ_2025_2.GUI
@@ -8,12 +10,16 @@ namespace BGJ_2025_2.GUI
     public abstract class Menu : MonoBehaviour
     {
         // Fields
-        [SerializeField] private GUIManager _gui;
+        [SerializeField] protected GUIManager _gui;
 
 
         // Properties
         /// <summary>A játék felhasználói felületét kezelõ fõosztály.</summary>
         public GUIManager GUI => _gui;
+        /// <summary>A játék üzleti logikáját kezelõ fõosztály</summary>
+        public GameManager Game => _gui.Game;
+        /// <summary>A játékot játszó játékos</summary>
+        public Player Player => Game.Player;
 
         /// <summary>Megadja, hogy nyitva van-e épp a menü.</summary>
         public bool IsOpen => gameObject.activeSelf;
@@ -30,6 +36,8 @@ namespace BGJ_2025_2.GUI
             if (IsOpen) return;
 
             gameObject.SetActive(true);
+
+            _gui.AddOpenMenu(this);
         }
 
         /// <summary>
@@ -40,6 +48,8 @@ namespace BGJ_2025_2.GUI
             if (IsClosed) return;
 
             gameObject.SetActive(false);
+
+            _gui.RemoveOpenMenu(this);
         }
 
         /// <summary>
@@ -55,6 +65,22 @@ namespace BGJ_2025_2.GUI
             {
                 Close();
             }
+        }
+
+        /// <summary>
+        /// Beállítja a menüt alapértékekre, általában <c>Start</c>-on belül használható.
+        /// </summary>
+        public virtual void SetUp()
+        {
+
+        }
+
+        /// <summary>
+        /// A menü állapotát frissíti, általában <c>Update</c>-en belül használható.
+        /// </summary>
+        public virtual void Refresh()
+        {
+
         }
     }
 }

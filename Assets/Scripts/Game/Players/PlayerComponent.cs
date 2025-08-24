@@ -9,7 +9,7 @@ namespace BGJ_2025_2.Game.Players
     public abstract class PlayerComponent : MonoBehaviour
     {
         // Fields
-        [SerializeField] private Player _player;
+        [SerializeField] protected Player _player;
 
 
         // Properties
