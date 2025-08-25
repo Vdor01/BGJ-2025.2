@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Materials/Game/Levels/Cabinet.meta
 guid: 91812f055449d0147a1003ecfcc3acc3
+========
+guid: f77cf53242a02ad4b9c8cc7c1c72901e
+>>>>>>>> 92e9b43 (Progress):Assets/Prefabs/Game/Levels.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

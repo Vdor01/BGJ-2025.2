@@ -9,5 +9,4 @@
 
 set target="vdor01/bgj-2025-2"
 
-butler push ..\Builds\WebGL.zip %target%:webgl --userversion 0.0.1
-::butler push ..\Builds\Windows\Windows.zip %target%:windows --userversion 1.0.0
+butler push ..\..\Builds\Windows\Windows.zip %target%:windows --userversion-file version.txt

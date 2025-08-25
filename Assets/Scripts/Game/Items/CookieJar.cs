@@ -1,5 +1,4 @@
 using BGJ_2025_2.Game.Interactions;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,10 +8,12 @@ namespace BGJ_2025_2.Game.Items
     public class CookieJar : MonoBehaviour, IUsable
     {
         // Fields
-        private const int _DefaultCookieCount = 50;
+        private const int _DefaultCookieCount = 100;
+        private const float _VerticalAnchorOffset = 0.0015f;
 
         [SerializeField] private Cookie _cookiePrefab;
-        [SerializeField] private Transform _cookieAnchor;
+        [SerializeField] private Transform[] _cookieAnchors;
+        [SerializeField] private Vector3[] _rotations;
         private readonly List<Cookie> _cookies = new(Mathf.NextPowerOfTwo(_DefaultCookieCount));
 
 
@@ -51,17 +52,14 @@ namespace BGJ_2025_2.Game.Items
 
         public void AddSome(int cookieCount)
         {
-            StartCoroutine(AddSomeCoroutine(cookieCount));
-        }
-
-        private IEnumerator AddSomeCoroutine(int cookieCount)
-        {
             for (int i = 0; i < cookieCount; ++i)
             {
-                Cookie cookie = Instantiate(_cookiePrefab, _cookieAnchor.position, Quaternion.identity, transform);
+                Cookie cookie = Instantiate(
+                    _cookiePrefab,
+                    _cookieAnchors[i % _cookieAnchors.Length].position + i * _VerticalAnchorOffset * Vector3.down,
+                    Quaternion.Euler(_rotations[i % _rotations.Length]),
+                    transform);
                 _cookies.Add(cookie);
-
-                yield return null;
             }
         }
 
@@ -73,6 +71,7 @@ namespace BGJ_2025_2.Game.Items
             {
                 cookieIndex = Random.Range(0, _cookies.Count);
                 takenOutCookie = _cookies[cookieIndex];
+
 
                 _cookies.RemoveAt(cookieIndex);
                 Destroy(takenOutCookie.gameObject);

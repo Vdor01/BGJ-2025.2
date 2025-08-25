@@ -61,9 +61,23 @@ namespace BGJ_2025_2.Game.Players
                     _grabbable = _interactable.Grabbable;
                     _usable = _interactable.Usable;
                 }
+                else if (_interactableObject.transform.parent.gameObject.TryGetComponent(out _interactable))
+                {
+                    _interactableObject = _interactableObject.transform.parent.gameObject;
+
+                    _descriptable = _interactable.Descriptable;
+                    _grabbable = _interactable.Grabbable;
+                    _usable = _interactable.Usable;
+                }
+                else
+                {
+                    _interactableObject = null;
+                }
             }
             else if (_interactable != null)
             {
+                _interactableObject = null;
+
                 _interactable = null;
                 _descriptable = null;
                 _grabbable = null;
@@ -172,8 +186,14 @@ namespace BGJ_2025_2.Game.Players
             _grabbedObject = null;
         }
 
+        private int count = 0;
+
         public void Use()
         {
+            // TODO: kiszedni
+            _player.Office.Boss.transform.position = _player.Office[count].Center;
+            ++count;
+
             if (_usable == null) return;
 
             _usable.Use();

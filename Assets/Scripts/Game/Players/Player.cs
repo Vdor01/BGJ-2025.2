@@ -1,3 +1,4 @@
+using BGJ_2025_2.Game.Levels;
 using UnityEngine;
 
 namespace BGJ_2025_2.Game.Players
@@ -10,6 +11,8 @@ namespace BGJ_2025_2.Game.Players
     public class Player : MonoBehaviour
     {
         // Fields
+        [SerializeField] private GameManager _game;
+
         [SerializeField] private PlayerInput _input;
         [SerializeField] private PlayerMovement _movement;
         [SerializeField] private PlayerView _view;
@@ -18,6 +21,9 @@ namespace BGJ_2025_2.Game.Players
 
 
         // Properties
+        public GameManager Game => _game;
+        public Office Office => _game.Office;
+
         public PlayerInput Input => _input;
         public PlayerMovement Movement => _movement;
         public PlayerView View => _view;
