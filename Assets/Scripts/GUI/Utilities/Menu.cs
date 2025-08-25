@@ -1,6 +1,7 @@
 using BGJ_2025_2.Game;
 using BGJ_2025_2.Game.Players;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace BGJ_2025_2.GUI
 {
@@ -11,6 +12,8 @@ namespace BGJ_2025_2.GUI
     {
         // Fields
         [SerializeField] protected GUIManager _gui;
+
+        [SerializeField] protected Selectable _defaultSelectable;
 
 
         // Properties
@@ -81,6 +84,15 @@ namespace BGJ_2025_2.GUI
         public virtual void Refresh()
         {
 
+        }
+
+        /// <summary>
+        /// Fölülírható egyedi menübõl való visszalépkedéses logika implementálására, (pl. almenük bezárása sorrendben) <br/> 
+        /// alapból csak bezárja a menüt.
+        /// </summary>
+        public virtual void Cancel()
+        {
+            Close();
         }
     }
 }

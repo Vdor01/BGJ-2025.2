@@ -24,5 +24,12 @@ namespace BGJ_2025_2.GUI.Credits
         {
             _versionLabel.SetText($"V. {Application.version}");
         }
+
+        public override void Cancel()
+        {
+            Close();
+
+            _gui.MainMenu.Open();
+        }
     }
 }

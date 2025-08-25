@@ -16,7 +16,15 @@ namespace BGJ_2025_2.GUI.Main
 
             Game.Play();
 
+            _gui.DisableCamera();
             _gui.OverlayMenu.Open();
+        }
+
+        public void OpenCredits()
+        {
+            _gui.CreditsMenu.Open();
+
+            Close();
         }
     }
 }

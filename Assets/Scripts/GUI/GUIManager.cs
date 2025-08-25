@@ -6,6 +6,7 @@ using BGJ_2025_2.GUI.Pause;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace BGJ_2025_2.GUI
 {
@@ -20,10 +21,12 @@ namespace BGJ_2025_2.GUI
         [SerializeField] private GameManager _game;
         [SerializeField] private EventSystem _eventSystem;
 
+        [SerializeField] private Camera _camera;
         [SerializeField] private MainMenu _mainMenu;
         [SerializeField] private CreditsMenu _creditsMenu;
         [SerializeField] private OverlayMenu _overlayMenu;
         [SerializeField] private PauseMenu _pauseMenu;
+        private Inputs _inputs;
         private Menu[] _menus;
         private List<Menu> _openMenus;
         private Menu _lastOpenedMenu;
@@ -42,6 +45,10 @@ namespace BGJ_2025_2.GUI
         // Methods
         private void Awake()
         {
+            _inputs = new Inputs();
+
+            _inputs.UI.Cancel.performed += callbackContext => Cancel(callbackContext);
+
             _menus = new Menu[]
             {
                 _mainMenu,
@@ -52,19 +59,26 @@ namespace BGJ_2025_2.GUI
             _openMenus = new(Mathf.NextPowerOfTwo(_menus.Length));
         }
 
+        private void OnEnable()
+        {
+            _inputs.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _inputs.Disable();
+        }
+
         private void Start()
         {
+            EnableCamera();
+
             foreach (Menu menu in _menus)
             {
-                if (menu == _mainMenu)
-                {
-                    menu.Open();
-                }
-                else
-                {
-                    menu.Close();
-                }
+                menu.gameObject.SetActive(false);
             }
+
+            _mainMenu.Open();
         }
 
         public void AddOpenMenu(Menu menu)
@@ -80,6 +94,23 @@ namespace BGJ_2025_2.GUI
             if (!_openMenus.Contains(menu)) return;
 
             _openMenus.Remove(menu);
+        }
+
+        public void Cancel(InputAction.CallbackContext callbackContext)
+        {
+            if (_lastOpenedMenu == _mainMenu || _lastOpenedMenu == _overlayMenu) return;
+
+            _lastOpenedMenu.Cancel();
+        }
+
+        public void EnableCamera()
+        {
+            _camera.gameObject.SetActive(true);
+        }
+
+        public void DisableCamera()
+        {
+            _camera.gameObject.SetActive(false);
         }
     }
 }
