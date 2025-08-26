@@ -1,4 +1,7 @@
+using BGJ_2025_2.Game.Leaderboards;
+using BGJ_2025_2.Game.Levels;
 using BGJ_2025_2.Game.Players;
+using BGJ_2025_2.Game.Tasks;
 using BGJ_2025_2.GUI;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,6 +22,9 @@ namespace BGJ_2025_2.Game
         [SerializeField] private EventSystem _eventSystem;
 
         [SerializeField] private Player _playerPrefab;
+        [SerializeField] private Office _office;
+        [SerializeField] private TaskHandler _tasks;
+        [SerializeField] private LeaderboardHandler _leaderboards;
         private Player _player;
 
 
@@ -27,6 +33,9 @@ namespace BGJ_2025_2.Game
         public EventSystem EventSystem => _eventSystem;
 
         public Player Player => _player;
+        public Office Office => _office;
+        public TaskHandler Tasks => _tasks;
+        public LeaderboardHandler Leaderboards => _leaderboards;
 
 
         // Methods

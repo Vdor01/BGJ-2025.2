@@ -69,6 +69,20 @@ namespace BGJ_2025_2.GUI.Overlay
                         ? $"{_playerInteractable.Descriptable.Description}\n{_playerInteractable.Usable.Usage}"
                         : _playerInteractable.Descriptable.Description);
                 }
+                else if (_playerInteractable.IsUsable)
+                {
+                    // Az elõzõ frame-nél még nem interaktálható dolgot nézett, ezért aktiválni kell a kurzor alatti labelt
+                    if (_previousPlayerInteractable == null)
+                    {
+                        _bottomInteractionLabel.gameObject.SetActive(true);
+                    }
+
+                    // Ha van használati leírása is, akkor jelenjen meg
+                    if (_playerInteractable.Usable.Usage != null)
+                    {
+                        _bottomInteractionLabel.SetText(_playerInteractable.Usable.Usage);
+                    }
+                }
             }
             else
             {
