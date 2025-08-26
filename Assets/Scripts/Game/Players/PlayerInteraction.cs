@@ -103,8 +103,6 @@ namespace BGJ_2025_2.Game.Players
 
         private void ReleaseGrabbedObjectTransform()
         {
-            if (_grabbedObjectParent == null) return;
-
             _grabbedObject.transform.parent = _grabbedObjectParent;
             _grabbedObjectParent = null;
         }
