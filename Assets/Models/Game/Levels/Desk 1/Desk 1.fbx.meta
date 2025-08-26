@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: e8c8295220afbf94cbfdd3fa683ec14b
+guid: a4b5b9cc9e2faad48a9cea775560373c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DarkWood
+    second: {fileID: 2100000, guid: 332b7a6e101371d4791168446d5a7ad7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood
+    second: {fileID: 2100000, guid: 38af43e1599f7304aa829cdf32916750, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
