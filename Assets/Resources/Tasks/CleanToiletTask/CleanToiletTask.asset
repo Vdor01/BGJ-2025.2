@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d35e38c4ace8ec4c805b468034eadb5, type: 3}
+  m_Name: CleanToiletTask
+  m_EditorClassIdentifier: 
+  <id>k__BackingField: CleanToiletTask
+  displayName: Clean up the toilet
+  taskStepPrefabs:
+  - {fileID: 4783478235749397457, guid: 0b2eb533f4e52724ab1808b1fc32d619, type: 3}
+  - {fileID: 0}

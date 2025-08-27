@@ -2,21 +2,51 @@ using UnityEngine;
 
 namespace BGJ_2025_2.Game.Tasks
 {
-    public abstract class Task : MonoBehaviour
+    public class Task
     {
-        // Fields
-        [SerializeField] private string _name;
-        [SerializeField][TextArea(3, 7)] private string _description;
+        public TaskInfoSO info;
 
+        public TaskState state;
+        private int currentTaskStepIndex;
 
-        // Properties
-        public string Name => _name;
-        public string Description => _description;
+        public Task(TaskInfoSO taskInfo)
+        {
+            this.info = taskInfo;
+            this.state = TaskState.NOT_AVAILABLE;
+            this.currentTaskStepIndex = 0;
+        }
 
+        public void MoveToNextStep()
+        {
+            currentTaskStepIndex++;
+        }
 
-        // Methods
-        public virtual void Begin() { }
+        public bool CurrentStepExists()
+        {
+            return (currentTaskStepIndex < info.taskStepPrefabs.Length);
+        }
 
-        public virtual void Finish() { }
+        public void InstantiateCurrentTaskStep(Transform parentTransform)
+        {
+            GameObject taskStepPrefab = GetCurrentTaskStepPrefab();
+            if (taskStepPrefab != null)
+            {
+                Object.Instantiate<GameObject>(taskStepPrefab, parentTransform);
+            }
+        }
+
+        private GameObject GetCurrentTaskStepPrefab()
+        {
+            GameObject taskStepPrefab = null;
+            if (CurrentStepExists())
+            {
+                taskStepPrefab = info.taskStepPrefabs[currentTaskStepIndex];
+            }
+            else
+            {
+                Debug.LogWarning("No more task steps available. TaskId=" + info.id + ", stepIndex=" + currentTaskStepIndex);
+            }
+            return taskStepPrefab;
+        }
     }
 }
