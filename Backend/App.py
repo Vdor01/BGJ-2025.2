@@ -44,7 +44,7 @@ class App:
         content = json.dumps(self.cursor.fetchall(), ensure_ascii=False)
         return {
             "status": 200,
-            "respType": "text/json",
+            "respType": "application/json",
             "content": content,
         }
 
