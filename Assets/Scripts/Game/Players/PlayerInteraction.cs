@@ -190,10 +190,6 @@ namespace BGJ_2025_2.Game.Players
 
         public void Use()
         {
-            // TODO: kiszedni
-            _player.Office.Boss.transform.position = _player.Office[count].Center;
-            ++count;
-
             if (_usable == null) return;
 
             _usable.Use();

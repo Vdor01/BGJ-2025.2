@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6917029203907305249}
   - component: {fileID: 8654456272356453355}
   - component: {fileID: 1192743372793808249}
+  - component: {fileID: 4045888514502177483}
   m_Layer: 0
   m_Name: Desk 2
   m_TagString: Untagged
@@ -109,3 +110,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6317106008045385693, guid: bd240561798d7254caf6984f38d68435, type: 3}
+--- !u!208 &4045888514502177483
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7141075480129210942}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.25, y: 0.43300003, z: 0.62200004}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.64100003, y: 0.43300003, z: 0.013}
+  m_TimeToStationary: 0.5

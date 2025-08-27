@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3009812825036959490}
   - component: {fileID: 5594658386892631660}
   - component: {fileID: 6490060237456467370}
+  - component: {fileID: 3625934573030890991}
   m_Layer: 0
   m_Name: Cabinet
   m_TagString: Untagged
@@ -196,3 +197,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.06455499, y: 0.15119185, z: 0.06254029}
   m_Center: {x: -0.46364537, y: 0.07559598, z: -0.053892255}
+--- !u!208 &3625934573030890991
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3311718565131307995}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.49600002, y: 0.492, z: 0.298}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.492, z: -0.272}
+  m_TimeToStationary: 0.5

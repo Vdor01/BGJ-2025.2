@@ -9,12 +9,14 @@ namespace BGJ_2025_2.Game.Items
     {
         // Fields
         [SerializeField] private string _name;
+        [SerializeField] private BoxCollider _boundingBox;
         [SerializeField] private UnityEvent _grabAction;
         [SerializeField] private UnityEvent _placeAction;
 
 
         // Properties
         public string Name => _name;
+        public BoxCollider BoundingBox => _boundingBox;
 
 
         // Methods

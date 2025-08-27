@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 104944599812562285}
   - component: {fileID: 6476907718051334408}
   - component: {fileID: 8681801807510667789}
+  - component: {fileID: 4419428074944717241}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -306,6 +307,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.7816758, y: 0.3533602, z: 2.3619416}
   m_Center: {x: 0.2911802, y: 0.07938873, z: 0.20566109}
+--- !u!208 &4419428074944717241
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2658931346610601857}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.391, y: 0.177, z: 1.1810001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.291, y: 0.079, z: 0.20600002}
+  m_TimeToStationary: 0.5
 --- !u!1 &7205222643283820678
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,9 +352,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2652260032167121642}
   - {fileID: 8630427441049874598}
   - {fileID: 8517020582732739822}
-  - {fileID: 2652260032167121642}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8196421594165419915

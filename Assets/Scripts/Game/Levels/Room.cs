@@ -37,6 +37,7 @@ namespace BGJ_2025_2.Game.Levels
             _center += transform.position;
             _center = new Vector3(_center.x, 0f, _center.z);
 
+            /*
             string debug = $"{name} | position: {transform.position}, local position: {transform.localPosition}, center: {_center}";
             foreach (RoomZone zone in _zones)
             {
@@ -51,6 +52,7 @@ namespace BGJ_2025_2.Game.Levels
                     $"edges: {zone.GetEdgeString()}";
             }
             Debug.Log(debug);
+            */
         }
 
         public void Enter(Collider other)
