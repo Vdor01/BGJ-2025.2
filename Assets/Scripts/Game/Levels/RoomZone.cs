@@ -17,6 +17,7 @@ namespace BGJ_2025_2.Game.Levels
         public Room Room => _room;
 
         public BoxCollider BoundingBox => _boundingBox;
+        public Vector3 Center => _boundingBox.bounds.center;
 
 
         // Methods
@@ -39,19 +40,17 @@ namespace BGJ_2025_2.Game.Levels
 
         public string GetEdgeString()
         {
-            float xPosition = _room.transform.position.x;
-            float zPosition = _room.transform.position.x;
+            float xCenter = _boundingBox.bounds.center.x;
+            float zCenter = _boundingBox.bounds.center.z;
 
-            float xCenter = _boundingBox.center.x;
-            float zCenter = _boundingBox.center.z;
-
-            float xTranslated = xPosition + xCenter;
-            float zTranslated = zPosition + zCenter;
+            float xTranslated = xCenter;
+            float zTranslated = zCenter;
 
             float xExtent = -_boundingBox.bounds.extents.x;
             float zExtent = -_boundingBox.bounds.extents.z;
-            return $"X: {-xExtent + xTranslated} - {xTranslated + xExtent}, " +
-                $"Z: {-zExtent + zTranslated} - {zExtent + zTranslated}";
+
+            return $"X: {-xExtent + xTranslated} | {xTranslated + xExtent}, " +
+                $"Z: {-zExtent + zTranslated} | {zExtent + zTranslated}";
         }
     }
 }

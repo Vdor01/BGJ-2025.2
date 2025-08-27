@@ -31,10 +31,9 @@ namespace BGJ_2025_2.Game.Levels
         {
             foreach (RoomZone zone in _zones)
             {
-                _center += zone.BoundingBox.center;
+                _center += zone.Center;
             }
             _center /= _zones.Length;
-            _center += transform.position;
             _center = new Vector3(_center.x, 0f, _center.z);
 
             /*
@@ -45,7 +44,7 @@ namespace BGJ_2025_2.Game.Levels
                     $"position: {zone.transform.position}, " +
                     $"local position: {zone.transform.localPosition}, " +
                     $"size: {zone.BoundingBox.size}, " +
-                    $"center: {zone.BoundingBox.center}, " +
+                    //$"center: {zone.BoundingBox.center}, " +
                     $"bounds size: {zone.BoundingBox.bounds.size}, " +
                     $"bounds center: {zone.BoundingBox.bounds.center}, " +
                     $"bound extents: {zone.BoundingBox.bounds.extents}," +

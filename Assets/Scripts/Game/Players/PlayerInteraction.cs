@@ -12,7 +12,7 @@ namespace BGJ_2025_2.Game.Players
     {
         // Fields
         private const float _DefaultInteractionDistance = 2.75f;
-        private const float _DefaultThrowPower = 25f;
+        private const float _DefaultThrowPower = 20f;
 
         [SerializeField] private LayerMask _interactionLayer;
         [SerializeField] private float _interactionDistance = _DefaultInteractionDistance;
@@ -185,8 +185,6 @@ namespace BGJ_2025_2.Game.Players
 
             _grabbedObject = null;
         }
-
-        private int count = 0;
 
         public void Use()
         {

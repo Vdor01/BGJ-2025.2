@@ -21,7 +21,7 @@ namespace BGJ_2025_2.Game
         [SerializeField] private GUIManager _gui;
         [SerializeField] private EventSystem _eventSystem;
 
-        [SerializeField] private Camera _menuCamera;
+        [SerializeField] private GameObject _menuRoom;
         [SerializeField] private Player _player;
         [SerializeField] private Office _office;
         [SerializeField] private TaskHandler _tasks;
@@ -52,7 +52,7 @@ namespace BGJ_2025_2.Game
         {
             _player.gameObject.SetActive(false);
 
-            EnableMenuCamera();
+            EnableMenuRoom();
         }
 
         private void Update()
@@ -76,14 +76,14 @@ namespace BGJ_2025_2.Game
             _player.gameObject.SetActive(true);
         }
 
-        public void EnableMenuCamera()
+        public void EnableMenuRoom()
         {
-            _menuCamera.gameObject.SetActive(true);
+            _menuRoom.gameObject.SetActive(true);
         }
 
         public void DisableMenuCamera()
         {
-            _menuCamera.gameObject.SetActive(false);
+            _menuRoom.gameObject.SetActive(false);
         }
     }
 }
