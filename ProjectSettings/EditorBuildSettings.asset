@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Remarci.unity
-    guid: 90e26fd41c68c5340878e3c1ba63455c
+    path: Assets/Scenes/Main.unity
+    guid: eb93727a8f460b24f99e107822e6377b
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
