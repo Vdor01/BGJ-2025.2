@@ -40,7 +40,11 @@ class App:
 
     def getLeaderboard(self):
         self.cursor.execute("SELECT * FROM leaderboard ORDER BY score DESC, timestamp ASC LIMIT 100;")
-        content = json.dumps(self.cursor.fetchall(), ensure_ascii=False)
+        data = self.cursor.fetchall()
+        if data:
+            content = json.dumps([{"id": d[0], "name": d[1], "score": d[2], "timestamp": d[3]} for d in data], ensure_ascii=False)
+        else:
+            content = "[]"
         return {
             "status": "200 OK",
             "respType": "application/json",
