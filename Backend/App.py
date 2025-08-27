@@ -4,7 +4,6 @@ import MySQLdb as mysql
 import pathlib
 import re
 import urllib.parse as urlparse
-import wsgiref.types as wsgitypes
 
 HOST = "BGJ20252.mysql.eu.pythonanywhere-services.com"
 USER = "BGJ20252"
@@ -43,7 +42,7 @@ class App:
         self.cursor.execute("SELECT * FROM leaderboard ORDER BY score DESC, timestamp ASC LIMIT 100;")
         content = json.dumps(self.cursor.fetchall(), ensure_ascii=False)
         return {
-            "status": 200,
+            "status": "200 OK",
             "respType": "application/json",
             "content": content,
         }
@@ -56,7 +55,7 @@ class App:
         self.cursor.execute("DELETE FROM leaderboard;")
         self.connection.commit()
 
-    def app(self, environ: wsgitypes.WSGIEnvironment, start_response: wsgitypes.StartResponse):
+    def app(self, environ, start_response):
         path = environ.get("PATH_INFO")
         params = urlparse.parse_qs(environ.get("QUERY_STRING"))
 
