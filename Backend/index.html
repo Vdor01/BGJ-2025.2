@@ -90,17 +90,26 @@
         console.log("Hostname:", window.location.hostname);
         if (window.location.hostname == "bgj20252.eu.pythonanywhere.com") {
             // fetch real data
-            fetch("/getleaderboard").then(res => res.json()).then(res => {
-                res.forEach((data, index) => {
-                    str += `<tr>
-                    <td class="id">${data[0]}</td>
-                    <td class="name">${data[1]}</td>
-                    <td class="score">${data[2]}</td>
-                    <td class="timestamp">${data[3]}</td>
-                </tr>`;
-                });
-                str += `</table>`;
-                container.innerHTML = str;
+            fetch("/getleaderboard").then(res => {
+                if (res.status != 200) {
+                    console.log("Error:", res.status);
+                    console.log(res.statusText);
+                    res.text().then(text => console.log(text));
+                } else {
+                    res.json().then(res => {
+                        res.forEach((data, index) => {
+                            str += `<tr>
+                                    <td class="id">${data[0]}</td>
+                                    <td class="name">${data[1]}</td>
+                                    <td class="score">${data[2]}</td>
+                                    <td class="timestamp">${data[3]}</td>
+                                </tr>`;
+                        });
+                        str += `</table>`;
+                        container.innerHTML = str;
+                    }
+                    );
+                }
             });
         } else {
             // load dummy test-data
