@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Leaderboard</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            background-color: #222;
+            color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 10px auto 20px;
+        }
+
+        #container {
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        table,
+        tr,
+        th,
+        td {
+            border: 1px solid #666;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 2px 5px;
+        }
+
+        .id,
+        .score {
+            text-align: center;
+        }
+
+        th.id {
+            min-width: 50px;
+        }
+
+        th.name {
+            min-width: 500px;
+        }
+
+        th.score {
+            min-width: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>The Leaderboard</h1>
+        <div id="container">
+            <table>
+                <tr>
+                    <th class="id">id</th>
+                    <th class="name">Name</th>
+                    <th class="score">Score</th>
+                    <th class="timestamp">Timestamp</th>
+                </tr>
+                <tr>
+                    <td colspan="4">No data in the database</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+        const container = document.getElementById("container");
+        let str = `<table>
+            <tr>
+                <th class="id">id</th>
+                <th class="name">Name</th>
+                <th class="score">Score</th>
+                <th class="timestamp">Timestamp</th>
+            </tr>`;
+        console.log("Hostname:", window.location.hostname);
+        if (window.location.hostname == "bgj20252.eu.pythonanywhere.com") {
+            // fetch real data
+            fetch("/getleaderboard").then(res => res.json()).then(res => {
+                res.forEach((data, index) => {
+                    str += `<tr>
+                    <td class="id">${data[0]}</td>
+                    <td class="name">${data[1]}</td>
+                    <td class="score">${data[2]}</td>
+                    <td class="timestamp">${data[3]}</td>
+                </tr>`;
+                });
+                str += `</table>`;
+                container.innerHTML = str;
+            });
+        } else {
+            // load dummy test-data
+            [
+                [0, "John Doe", 10, "2025-04-04 10:00:00"],
+                [1, "Jane Doe", 15, "2025-04-04 10:05:00"],
+                [2, "Alice Smith", 22, "2025-04-04 10:10:00"],
+                [3, "Bob Johnson", 18, "2025-04-04 10:15:00"],
+                [4, "Charlie Brown", 30, "2025-04-04 10:20:00"],
+                [5, "Diana Prince", 28, "2025-04-04 10:25:00"],
+                [6, "Ethan Hunt", 12, "2025-04-04 10:30:00"],
+                [7, "Fiona Gallagher", 25, "2025-04-04 10:35:00"],
+                [8, "George Miller", 19, "2025-04-04 10:40:00"],
+                [9, "Hannah Davis", 21, "2025-04-04 10:45:00"],
+                [10, "Ian Wright", 16, "2025-04-04 10:50:00"],
+                [11, "Julia Roberts", 24, "2025-04-04 10:55:00"],
+                [12, "Kevin Hart", 14, "2025-04-04 11:00:00"],
+                [13, "Laura Palmer", 26, "2025-04-04 11:05:00"],
+                [14, "Mike Ross", 20, "2025-04-04 11:10:00"],
+                [15, "Nina Williams", 27, "2025-04-04 11:15:00"],
+                [16, "Oscar Isaac", 13, "2025-04-04 11:20:00"],
+                [17, "Paula Abdul", 29, "2025-04-04 11:25:00"],
+                [18, "Quentin Blake", 17, "2025-04-04 11:30:00"],
+                [19, "Rachel Green", 23, "2025-04-04 11:35:00"],
+                [20, "Steve Rogers", 31, "2025-04-04 11:40:00"],
+                [21, "Tina Turner", 11, "2025-04-04 11:45:00"],
+                [22, "Uma Thurman", 18, "2025-04-04 11:50:00"],
+                [23, "Victor Stone", 22, "2025-04-04 11:55:00"],
+                [24, "Wendy Darling", 15, "2025-04-04 12:00:00"]
+            ].forEach(data => {
+                str += `<tr>
+                    <td class="id">${data[0]}</td>
+                    <td class="name">${data[1]}</td>
+                    <td class="score">${data[2]}</td>
+                    <td class="timestamp">${data[3]}</td>
+                </tr>`;
+            });
+            str += `</table>`;
+            container.innerHTML = str;
+        }
+    </script>
+</body>
+
+</html>
