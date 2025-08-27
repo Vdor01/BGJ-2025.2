@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace BGJ_2025_2.Game.Interactions
 {
     /// <summary>
@@ -16,6 +18,11 @@ namespace BGJ_2025_2.Game.Interactions
         /// implementáló script rajta van.
         /// </summary>
         IGrabbable IInteractable.Grabbable => this;
+
+        /// <summary>
+        /// A teljes objektumot minél szorosabban magába foglaló triggernek beállított <see cref="BoxCollider"/>
+        /// </summary>
+        BoxCollider BoundingBox => null;
 
         /// <summary>
         /// A felvétel után végrehajtható funkcionalitás.

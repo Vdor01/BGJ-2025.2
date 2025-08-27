@@ -21,17 +21,21 @@ namespace BGJ_2025_2.Game
         [SerializeField] private GUIManager _gui;
         [SerializeField] private EventSystem _eventSystem;
 
-        [SerializeField] private Player _playerPrefab;
+        [SerializeField] private Camera _menuCamera;
+        [SerializeField] private Player _player;
         [SerializeField] private Office _office;
         [SerializeField] private TaskHandler _tasks;
         [SerializeField] private LeaderboardHandler _leaderboards;
-        private Player _player;
+        private float _elapsedSecond;
+        private int _elapsedFrames;
+        private int _framesPerSecond;
 
 
         // Properties
         public GUIManager GUI => _gui;
         public EventSystem EventSystem => _eventSystem;
 
+        public int FramesPerSecond => _framesPerSecond;
         public Player Player => _player;
         public Office Office => _office;
         public TaskHandler Tasks => _tasks;
@@ -44,9 +48,42 @@ namespace BGJ_2025_2.Game
             Application.targetFrameRate = _TargetFrameRate;
         }
 
+        private void Start()
+        {
+            _player.gameObject.SetActive(false);
+
+            EnableMenuCamera();
+        }
+
+        private void Update()
+        {
+            _elapsedSecond += Time.deltaTime;
+
+            if (_elapsedSecond >= 1f)
+            {
+                _framesPerSecond = _elapsedFrames;
+                _elapsedFrames = 0;
+                _elapsedSecond -= 1f;
+            }
+
+            ++_elapsedFrames;
+        }
+
         public void Play()
         {
-            _player = Instantiate(_playerPrefab, Vector3.zero, Quaternion.identity, transform);
+            DisableMenuCamera();
+
+            _player.gameObject.SetActive(true);
+        }
+
+        public void EnableMenuCamera()
+        {
+            _menuCamera.gameObject.SetActive(true);
+        }
+
+        public void DisableMenuCamera()
+        {
+            _menuCamera.gameObject.SetActive(false);
         }
     }
 }

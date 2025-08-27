@@ -10,8 +10,10 @@ namespace BGJ_2025_2.Game.Players
     public class PlayerView : PlayerComponent
     {
         // Fields
+        private const float _DefaultLookSensitivity = 2f;
+
         [SerializeField] private Camera _camera;
-        [SerializeField] private float _lookSensitivity;
+        [SerializeField] private float _lookSensitivity = _DefaultLookSensitivity;
 
 
         // Properties
@@ -28,10 +30,10 @@ namespace BGJ_2025_2.Game.Players
 
         public void Look(Vector2 direction)
         {
-            _player.transform.Rotate(direction.x * _lookSensitivity * Vector3.up, Space.Self);
+            _player.transform.Rotate(direction.x * Time.deltaTime * _lookSensitivity * Vector3.up, Space.Self);
 
             Vector3 rotation = _camera.transform.localEulerAngles;
-            float xRotation = rotation.x - direction.y * _lookSensitivity;
+            float xRotation = rotation.x - direction.y * Time.deltaTime * _lookSensitivity;
             float clampedXRotation = Mathf.Clamp(xRotation >= 180 ? xRotation - 360f : xRotation, -90f, 90f);
             _camera.transform.localEulerAngles = new(clampedXRotation, rotation.y, rotation.z);
         }

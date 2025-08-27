@@ -4,6 +4,7 @@ using BGJ_2025_2.GUI.Main;
 using BGJ_2025_2.GUI.Overlay;
 using BGJ_2025_2.GUI.Pause;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -21,7 +22,7 @@ namespace BGJ_2025_2.GUI
         [SerializeField] private GameManager _game;
         [SerializeField] private EventSystem _eventSystem;
 
-        [SerializeField] private Camera _camera;
+        [SerializeField] private TextMeshProUGUI _framesPerSecondLabel;
         [SerializeField] private MainMenu _mainMenu;
         [SerializeField] private CreditsMenu _creditsMenu;
         [SerializeField] private OverlayMenu _overlayMenu;
@@ -49,6 +50,10 @@ namespace BGJ_2025_2.GUI
 
             _inputs.UI.Cancel.performed += callbackContext => Cancel(callbackContext);
 
+            _inputs.UI.FPS.performed += callbackContext => ToggleFramesPerSecondCounter(callbackContext);
+
+            _framesPerSecondLabel.gameObject.SetActive(false);
+
             _menus = new Menu[]
             {
                 _mainMenu,
@@ -59,6 +64,24 @@ namespace BGJ_2025_2.GUI
             _openMenus = new(Mathf.NextPowerOfTwo(_menus.Length));
         }
 
+        private void Start()
+        {
+            foreach (Menu menu in _menus)
+            {
+                menu.gameObject.SetActive(false);
+            }
+
+            _mainMenu.Open();
+        }
+
+        private void Update()
+        {
+            if (_framesPerSecondLabel.gameObject.activeSelf)
+            {
+                _framesPerSecondLabel.SetText($"{_game.FramesPerSecond} FPS");
+            }
+        }
+
         private void OnEnable()
         {
             _inputs.Enable();
@@ -67,18 +90,6 @@ namespace BGJ_2025_2.GUI
         private void OnDisable()
         {
             _inputs.Disable();
-        }
-
-        private void Start()
-        {
-            EnableCamera();
-
-            foreach (Menu menu in _menus)
-            {
-                menu.gameObject.SetActive(false);
-            }
-
-            _mainMenu.Open();
         }
 
         public void AddOpenMenu(Menu menu)
@@ -103,14 +114,9 @@ namespace BGJ_2025_2.GUI
             _lastOpenedMenu.Cancel();
         }
 
-        public void EnableCamera()
+        public void ToggleFramesPerSecondCounter(InputAction.CallbackContext callbackContext)
         {
-            _camera.gameObject.SetActive(true);
-        }
-
-        public void DisableCamera()
-        {
-            _camera.gameObject.SetActive(false);
+            _framesPerSecondLabel.gameObject.SetActive(!_framesPerSecondLabel.gameObject.activeSelf);
         }
     }
 }

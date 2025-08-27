@@ -22,7 +22,7 @@ namespace BGJ_2025_2.Game.Levels.Demo
         // Methods
         public void Use()
         {
-            transform.position += Vector3.up * 2f;
+            transform.position += Vector3.up;
         }
     }
 }

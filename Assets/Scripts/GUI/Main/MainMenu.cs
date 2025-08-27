@@ -31,7 +31,6 @@ namespace BGJ_2025_2.GUI.Main
 
             Game.Play();
 
-            _gui.DisableCamera();
             _gui.OverlayMenu.Open();
         }
 
