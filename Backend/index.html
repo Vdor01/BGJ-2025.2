@@ -87,10 +87,10 @@
                 <th class="score">Score</th>
                 <th class="timestamp">Timestamp</th>
             </tr>`;
-        console.log("Hostname:", window.location.hostname + "/getleaderboard");
+        console.log("Hostname:", window.location.origin + "/getleaderboard");
         if (window.location.hostname == "bgj20252.eu.pythonanywhere.com") {
             // fetch real data
-            fetch(window.location.hostname + "/getleaderboard").then(res => {
+            fetch(window.location.origin + "/getleaderboard").then(res => {
                 if (res.status != 200) {
                     console.log("Error:", res.status);
                     console.log(res.statusText);
