@@ -1,3 +1,4 @@
+using BGJ_2025_2.Game.Tasks;
 using UnityEngine;
 
 namespace BGJ_2025_2.Game.Levels
@@ -23,6 +24,9 @@ namespace BGJ_2025_2.Game.Levels
         public int WanderCount => _wanderCount;
         public RoomZone[] Zones => _zones;
         public Vector3 Center => _center;
+
+        [Header("Tasks")]
+        [SerializeField] private TaskPoint[] _taskPoints;
 
 
         // Methods
@@ -55,7 +59,24 @@ namespace BGJ_2025_2.Game.Levels
 
         public void Enter(Collider other)
         {
+            if (other.CompareTag("Player"))
+            {
+                foreach (TaskPoint taskPoint in _taskPoints)
+                {
+                    taskPoint.OnEnter();
+                }
+            }
+        }
 
+        public void Exit(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                foreach (TaskPoint taskPoint in _taskPoints)
+                {
+                    taskPoint.OnExit();
+                }
+            }
         }
 
         public RoomZone GetRandomZone()

@@ -4,17 +4,17 @@ namespace BGJ_2025_2.Game.Events
 {
     public class GameEventsManager : MonoBehaviour
     {
-        public static GameEventsManager instance { get; private set; }
+        public static GameEventsManager Instance { get; private set; }
 
         public TaskEvents taskEvents;
 
         private void Awake()
         {
-            if (instance != null)
+            if (Instance != null)
             {
                 Debug.LogError("Multiple instances of GameEventsManager detected.");
             }
-            instance = this;
+            Instance = this;
 
             taskEvents = new TaskEvents();
         }

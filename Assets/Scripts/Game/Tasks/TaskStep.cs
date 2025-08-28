@@ -1,18 +1,26 @@
+using BGJ_2025_2.Game.Events;
 using UnityEngine;
 
-public abstract class TaskStep : MonoBehaviour
+namespace BGJ_2025_2.Game.Tasks
 {
-    private bool isFinished = false;
-
-    protected void FinishTaskStep()
+    public abstract class TaskStep : MonoBehaviour
     {
-        if (!isFinished)
+        private bool isFinished = false;
+        private string taskId;
+
+        public void InitializeTaskStep(string taskId)
         {
-            isFinished = true;
+            this.taskId = taskId;
+        }
 
-            // TODO - Advance to the next step in the task
-
-            Destroy(this.gameObject);
+        protected void FinishTaskStep()
+        {
+            if (!isFinished)
+            {
+                isFinished = true;
+                GameEventsManager.Instance.taskEvents.AdvanceTask(taskId);
+                Destroy(this.gameObject);
+            }
         }
     }
 }

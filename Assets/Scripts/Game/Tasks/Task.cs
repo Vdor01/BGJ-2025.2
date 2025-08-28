@@ -31,7 +31,8 @@ namespace BGJ_2025_2.Game.Tasks
             GameObject taskStepPrefab = GetCurrentTaskStepPrefab();
             if (taskStepPrefab != null)
             {
-                Object.Instantiate<GameObject>(taskStepPrefab, parentTransform);
+                TaskStep taskStep = Object.Instantiate<GameObject>(taskStepPrefab, parentTransform).GetComponent<TaskStep>();
+                taskStep.InitializeTaskStep(info.id);
             }
         }
 

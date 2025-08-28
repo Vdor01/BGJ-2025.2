@@ -23,16 +23,16 @@ namespace BGJ_2025_2.Game.Tasks
 
         private void OnEnable()
         {
-            GameEventsManager.instance.taskEvents.onStartTask += StartQuest;
-            GameEventsManager.instance.taskEvents.onAdvanceTask += AdvanceQuest;
-            GameEventsManager.instance.taskEvents.onFinishTask += FinishQuest;
+            GameEventsManager.Instance.taskEvents.onStartTask += StartTask;
+            GameEventsManager.Instance.taskEvents.onAdvanceTask += AdvanceTask;
+            GameEventsManager.Instance.taskEvents.onFinishTask += FinishTask;
         }
 
         private void OnDisable()
         {
-            GameEventsManager.instance.taskEvents.onStartTask -= StartQuest;
-            GameEventsManager.instance.taskEvents.onAdvanceTask -= AdvanceQuest;
-            GameEventsManager.instance.taskEvents.onFinishTask -= FinishQuest;
+            GameEventsManager.Instance.taskEvents.onStartTask -= StartTask;
+            GameEventsManager.Instance.taskEvents.onAdvanceTask -= AdvanceTask;
+            GameEventsManager.Instance.taskEvents.onFinishTask -= FinishTask;
         }
 
         private void Start()
@@ -40,23 +40,51 @@ namespace BGJ_2025_2.Game.Tasks
             // Broadcast the initial state of all tasks
             foreach (Task task in taskMap.Values)
             {
-                GameEventsManager.instance.taskEvents.TaskStateChange(task);
+                GameEventsManager.Instance.taskEvents.TaskStateChange(task);
             }
         }
 
-        private void StartQuest(string id)
+        private void ChangeTaskState(string id, TaskState state)
         {
-            // TODO - start the task
+            Task task = GetTaskById(id);
+            task.state = state;
+            GameEventsManager.Instance.taskEvents.TaskStateChange(task);
         }
 
-        private void AdvanceQuest(string id)
+        private void StartTask(string id)
         {
-            // TODO - advance the task
+            Debug.Log("Starting task with id: " + id);
+
+            Task task = GetTaskById(id);
+            task.InstantiateCurrentTaskStep(this.transform);
+            ChangeTaskState(task.info.id, TaskState.IN_PROGRESS);
         }
 
-        private void FinishQuest(string id)
+        private void AdvanceTask(string id)
         {
-            // TODO - finish the task
+            Debug.Log("Advancing task with id: " + id);
+
+            Task task = GetTaskById(id);
+
+            task.MoveToNextStep();
+
+            if (task.CurrentStepExists())
+            {
+                task.InstantiateCurrentTaskStep(this.transform);
+            }
+            else
+            {
+                ChangeTaskState(task.info.id, TaskState.CAN_FINISH);
+            }
+        }
+
+        private void FinishTask(string id)
+        {
+            Debug.Log("Finishing task with id: " + id);
+
+            Task task = GetTaskById(id);
+            // TODO - reward player here, not fired yet
+            ChangeTaskState(task.info.id, TaskState.FINISHED);
         }
 
         private Dictionary<string, Task> CreateTaskMap()
@@ -72,6 +100,7 @@ namespace BGJ_2025_2.Game.Tasks
                     Debug.LogWarning("Duplicate TaskInfoSO id found: " + taskInfo.id + ". Please ensure all TaskInfoSO ids are unique.");
                 }
                 idToTaskMap.Add(taskInfo.id, new Task(taskInfo));
+                //Debug.Log("Loaded task: " + taskInfo.name);
             }
             return idToTaskMap;
         }

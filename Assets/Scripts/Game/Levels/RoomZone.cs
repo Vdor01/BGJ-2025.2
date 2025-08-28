@@ -26,6 +26,11 @@ namespace BGJ_2025_2.Game.Levels
             _room.Enter(other);
         }
 
+        private void OnTriggerExit(Collider other)
+        {
+            _room.Exit(other);
+        }
+
         public Vector3 GetRandomPosition()
         {
             float xPosition = Random.Range(
