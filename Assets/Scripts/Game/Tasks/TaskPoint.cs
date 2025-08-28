@@ -1,14 +1,13 @@
 using BGJ_2025_2.Game.Events;
 using BGJ_2025_2.Game.Players;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace BGJ_2025_2.Game.Tasks
 {
     public class TaskPoint : MonoBehaviour
     {
         public Player player;
-        [SerializeField] private Inputs inputs;
+        private Inputs inputs;
 
         [Header("Task")]
         [SerializeField] private TaskInfoSO taskInfoForPoint;
@@ -24,27 +23,31 @@ namespace BGJ_2025_2.Game.Tasks
         private void Awake()
         {
             taskId = taskInfoForPoint.id;
-            //inputs.Player.Use.performed += ctx => SubmitPressed();
-            //inputs.Player.Use.canceled += ctx => SubmitPressed();
+
+            inputs = new Inputs();
+
+            inputs.Player.Use.performed += ctx => SubmitPressed();
+            inputs.Player.Use.canceled += ctx => SubmitPressed();
         }
 
         private void OnEnable()
         {
             GameEventsManager.Instance.taskEvents.onTaskStateChange += TaskStateChange;
-            //inputs.Player.Use.Enable();
+            inputs.Player.Use.Enable();
         }
 
         private void OnDisable()
         {
             GameEventsManager.Instance.taskEvents.onTaskStateChange -= TaskStateChange;
-            //inputs.Player.Use.Disable();
+            inputs.Player.Use.Disable();
         }
 
         private void SubmitPressed()
         {
-            if (playerIsNear <= 0) { 
+            if (playerIsNear <= 0)
+            {
                 playerIsNear = 0;
-                return; 
+                return;
             }
 
             // Testing purposes only - remove later
