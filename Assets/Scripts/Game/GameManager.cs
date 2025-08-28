@@ -29,17 +29,19 @@ namespace BGJ_2025_2.Game
         private float _elapsedSecond;
         private int _elapsedFrames;
         private int _framesPerSecond;
+        private bool _isRunning;
 
 
         // Properties
         public GUIManager GUI => _gui;
         public EventSystem EventSystem => _eventSystem;
 
-        public int FramesPerSecond => _framesPerSecond;
         public Player Player => _player;
         public Office Office => _office;
         public TaskHandler Tasks => _tasks;
         public LeaderboardHandler Leaderboards => _leaderboards;
+        public int FramesPerSecond => _framesPerSecond;
+        public bool IsRunning => _isRunning;
 
 
         // Methods
@@ -71,19 +73,30 @@ namespace BGJ_2025_2.Game
 
         public void Play()
         {
-            DisableMenuCamera();
+            DisableMenuRoom();
 
             _player.gameObject.SetActive(true);
+            _isRunning = true;
+        }
+
+        public void Reload()
+        {
+            _player.gameObject.SetActive(false);
+            _isRunning = false;
         }
 
         public void EnableMenuRoom()
         {
-            _menuRoom.gameObject.SetActive(true);
+            if (_menuRoom.activeSelf) return;
+
+            _menuRoom.SetActive(true);
         }
 
-        public void DisableMenuCamera()
+        public void DisableMenuRoom()
         {
-            _menuRoom.gameObject.SetActive(false);
+            if (!_menuRoom.activeSelf) return;
+
+            _menuRoom.SetActive(false);
         }
     }
 }

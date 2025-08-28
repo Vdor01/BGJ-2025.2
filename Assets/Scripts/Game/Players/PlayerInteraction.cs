@@ -52,7 +52,7 @@ namespace BGJ_2025_2.Game.Players
 
         private void Update()
         {
-            if (Raycast(out _raycastHit, _interactionLayerMask))
+            if (Raycast(out _raycastHit, _interactionDistance, _interactionLayerMask))
             {
                 _interactableObject = _raycastHit.collider.gameObject;
                 if (_interactableObject.TryGetComponent(out _interactable))
@@ -180,8 +180,13 @@ namespace BGJ_2025_2.Game.Players
 
             ReleaseGrabbedObjectColliders();
 
+            Vector3 throwDirection = Raycast(out _raycastHit, float.PositiveInfinity)
+                ? (_raycastHit.point - _mainHand.transform.position).normalized
+                : _player.View.Forward;
+            Debug.Log(_raycastHit.collider.gameObject.name);
+
             _grabbedObjectRigidbody.isKinematic = false; ;
-            _grabbedObjectRigidbody.AddForce(_throwPower * _player.View.Forward, ForceMode.Impulse);
+            _grabbedObjectRigidbody.AddForce(_throwPower * throwDirection, ForceMode.Impulse);
             _grabbedObjectRigidbody = null;
 
             _grabbedObject = null;
@@ -194,9 +199,9 @@ namespace BGJ_2025_2.Game.Players
             _usable.Use();
         }
 
-        private bool Raycast(out RaycastHit raycastHit, int layerMask = Physics.DefaultRaycastLayers)
+        private bool Raycast(out RaycastHit raycastHit, float maxDistance = _DefaultInteractionDistance, int layerMask = Physics.DefaultRaycastLayers)
         {
-            return Physics.Raycast(_player.View.GetRay(), out raycastHit, _interactionDistance)
+            return Physics.Raycast(_player.View.GetRay(), out raycastHit, maxDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore)
                 && ((1 << raycastHit.collider.gameObject.layer) & layerMask) != 0;
         }
 

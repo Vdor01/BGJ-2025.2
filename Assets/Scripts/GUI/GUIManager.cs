@@ -23,6 +23,7 @@ namespace BGJ_2025_2.GUI
         [SerializeField] private EventSystem _eventSystem;
 
         [SerializeField] private TextMeshProUGUI _framesPerSecondLabel;
+        [SerializeField] private TransitionPanel _transitionPanel;
         [SerializeField] private MainMenu _mainMenu;
         [SerializeField] private CreditsMenu _creditsMenu;
         [SerializeField] private OverlayMenu _overlayMenu;
@@ -37,6 +38,7 @@ namespace BGJ_2025_2.GUI
         public GameManager Game => _game;
         public EventSystem EventSystem => _eventSystem;
 
+        public TransitionPanel TransitionPanel => _transitionPanel;
         public MainMenu MainMenu => _mainMenu;
         public CreditsMenu CreditsMenu => _creditsMenu;
         public OverlayMenu OverlayMenu => _overlayMenu;
@@ -66,6 +68,8 @@ namespace BGJ_2025_2.GUI
 
         private void Start()
         {
+            _transitionPanel.TransitionOut();
+
             foreach (Menu menu in _menus)
             {
                 menu.gameObject.SetActive(false);

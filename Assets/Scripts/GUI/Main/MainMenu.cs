@@ -21,17 +21,20 @@ namespace BGJ_2025_2.GUI.Main
         {
             if (_skip)
             {
-                PlayGame();
+                Close();
+                _gui.OverlayMenu.Open();
+                Game.Play();
             }
         }
 #endif
         public void PlayGame()
         {
-            Close();
-
-            Game.Play();
-
-            _gui.OverlayMenu.Open();
+            _gui.TransitionPanel.TransitionInAndOut(() =>
+            {
+                Close();
+                _gui.OverlayMenu.Open();
+                Game.Play();
+            }, text: "Day 1");
         }
 
         public void OpenCredits()

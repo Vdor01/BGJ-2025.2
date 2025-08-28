@@ -10,8 +10,8 @@ namespace BGJ_2025_2.Game.Players
     public class PlayerMovement : PlayerComponent
     {
         // Fields
-        private const float _DefaultWalkSpeed = 6.5f;
-        private const float _DefaultRunSpeed = 9.5f;
+        private const float _DefaultWalkSpeed = 6f;
+        private const float _DefaultRunSpeed = 9f;
 
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private Collider[] _colliders;
