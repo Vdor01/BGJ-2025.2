@@ -9,6 +9,11 @@ namespace BGJ_2025_2.Game.Players
     [AddComponentMenu("BGJ 2025.2/Game/Players/Player appearance")]
     public class PlayerAppearance : PlayerComponent
     {
+        // Fields
+        [SerializeField] MeshRenderer _meshRenderer;
 
+
+        // Properties
+        public bool IsVisible => _meshRenderer.isVisible;
     }
 }

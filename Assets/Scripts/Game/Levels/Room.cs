@@ -6,7 +6,7 @@ namespace BGJ_2025_2.Game.Levels
     public class Room : MonoBehaviour
     {
         // Fields
-        private const int _DefaultWanderCount = 3;
+        private const int _DefaultWanderCount = 2;
 
         [SerializeField] private Office _office;
 
@@ -14,14 +14,13 @@ namespace BGJ_2025_2.Game.Levels
         [SerializeField] private int _wanderCount = _DefaultWanderCount;
         [SerializeField] private RoomZone[] _zones;
         private Vector3 _center = Vector3.zero;
-        private Vector3 _previousWanderPosition;
 
 
         // Properties
         public Office Office => _office;
 
         public string Name => _name;
-        public int WanderPositions => _wanderCount;
+        public int WanderCount => _wanderCount;
         public RoomZone[] Zones => _zones;
         public Vector3 Center => _center;
 

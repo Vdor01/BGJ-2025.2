@@ -1,4 +1,5 @@
 using BGJ_2025_2.Game.Interactions;
+using BGJ_2025_2.Game.Levels;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,19 +9,25 @@ namespace BGJ_2025_2.Game.Items
     public class CookieJar : MonoBehaviour, IUsable
     {
         // Fields
-        private const int _DefaultCookieCount = 100;
+        public const int DefaultCookieCount = 100;
         private const float _VerticalAnchorOffset = 0.0015f;
+
+        [SerializeField] private Office _office;
 
         [SerializeField] private Cookie _cookiePrefab;
         [SerializeField] private Transform[] _cookieAnchors;
         [SerializeField] private Vector3[] _rotations;
-        private readonly List<Cookie> _cookies = new(Mathf.NextPowerOfTwo(_DefaultCookieCount));
+        private readonly List<Cookie> _cookies = new(Mathf.NextPowerOfTwo(DefaultCookieCount));
 
 
         // Properties
+        public Office Office => _office;
+
         public string Name => "Cookie Jar";
         public string Usage => $"Take a cookie ({_cookies.Count} left)";
         public int CookieCount => _cookies.Count;
+        public float Fullness => _cookies.Count / (float)DefaultCookieCount;
+        public float Emptiness => 1f - Fullness;
 
 
         // Methods
@@ -32,6 +39,8 @@ namespace BGJ_2025_2.Game.Items
         public void Use()
         {
             TakeOut();
+
+            _office.Boss.NotifyFromCookieJar();
         }
 
         public void EmptyOut()
@@ -43,7 +52,7 @@ namespace BGJ_2025_2.Game.Items
             }
         }
 
-        public void FillUp(int cookieCount = _DefaultCookieCount)
+        public void FillUp(int cookieCount = DefaultCookieCount)
         {
             EmptyOut();
 

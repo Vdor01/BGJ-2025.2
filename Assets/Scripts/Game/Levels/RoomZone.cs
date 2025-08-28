@@ -35,7 +35,7 @@ namespace BGJ_2025_2.Game.Levels
                 -_boundingBox.bounds.extents.z + _BoundingBoxMargin,
                 _boundingBox.bounds.extents.z - _BoundingBoxMargin);
 
-            return _room.transform.position + _boundingBox.bounds.center + new Vector3(xPosition, 0f, zPosition);
+            return _boundingBox.bounds.center + new Vector3(xPosition, 0f, zPosition);
         }
 
         public string GetEdgeString()

@@ -18,6 +18,7 @@ Shader "Universal Render Pipeline/2D/Sprite-Culled-Unlit-Default"
 
         Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
         //Cull Off
+        Cull Front
         ZWrite Off
 
         Pass

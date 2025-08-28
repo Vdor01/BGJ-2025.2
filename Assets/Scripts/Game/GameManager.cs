@@ -79,6 +79,11 @@ namespace BGJ_2025_2.Game
             _isRunning = true;
         }
 
+        public void End()
+        {
+
+        }
+
         public void Reload()
         {
             _player.gameObject.SetActive(false);

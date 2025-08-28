@@ -11,6 +11,8 @@ namespace BGJ_2025_2.Game.Players
     public class Player : MonoBehaviour
     {
         // Fields
+        private const string RoomTag = "Room";
+
         [SerializeField] private GameManager _game;
 
         [SerializeField] private PlayerInput _input;
@@ -18,6 +20,7 @@ namespace BGJ_2025_2.Game.Players
         [SerializeField] private PlayerView _view;
         [SerializeField] private PlayerInteraction _interaction;
         [SerializeField] private PlayerAppearance _appearance;
+        private Room _currentRoom;
 
 
         // Properties
@@ -29,5 +32,28 @@ namespace BGJ_2025_2.Game.Players
         public PlayerView View => _view;
         public PlayerInteraction Interaction => _interaction;
         public PlayerAppearance Appearance => _appearance;
+        public Room CurrentRoom => _currentRoom;
+
+
+        // Methods
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag(RoomTag))
+            {
+                Room enteredRoom = other.gameObject.GetComponent<RoomZone>().Room;
+                if (enteredRoom != _currentRoom || _currentRoom == null)
+                {
+                    _currentRoom = enteredRoom;
+#if UNITY_EDITOR
+                    Debug.Log($"[PLAYER] Entered room: {_currentRoom.Name}");
+#endif
+                }
+            }
+        }
+
+        public void Fire()
+        {
+            _game.End();
+        }
     }
 }

@@ -14,6 +14,8 @@ namespace BGJ_2025_2.Game.Levels
         [SerializeField] private Boss _boss;
         [SerializeField] private CookieJar _cookieJar;
         [SerializeField] private Room[] _rooms;
+        [SerializeField] private Room _kitchen;
+        [SerializeField] private Transform _cookieJarViewing;
         private Room _playerRoom;
         private Room _bossRoom;
 
@@ -26,6 +28,8 @@ namespace BGJ_2025_2.Game.Levels
         public CookieJar CookieJar => _cookieJar;
         public Room[] Rooms => _rooms;
         public Room this[int index] => _rooms[index];
+        public Room Kitchen => _kitchen;
+        public Transform CookieJarViewing => _cookieJarViewing;
         public Room PlayerRoom => _playerRoom;
         public Room BossRoom => _bossRoom;
 
