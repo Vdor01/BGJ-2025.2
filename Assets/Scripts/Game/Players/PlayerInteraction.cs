@@ -156,11 +156,12 @@ namespace BGJ_2025_2.Game.Players
             ReleaseGrabbedObjectTransform();
 
             ChangeGrabbedObjectColliderStates(true);
-            if (Raycast(out _raycastHit, Physics.AllLayers))
+            if (Raycast(out _raycastHit))
             {
                 _grabbedObject.transform.position = _raycastHit.point +
                     Vector3.Scale(_grabbedObjectColliders[0].bounds.size / 2f, _raycastHit.normal);
             }
+
             _grabbedObjectColliders = null;
 
             ReleaseGrabbedObjectRigidbody();
@@ -193,9 +194,10 @@ namespace BGJ_2025_2.Game.Players
             _usable.Use();
         }
 
-        private bool Raycast(out RaycastHit raycastHit, int layerMask)
+        private bool Raycast(out RaycastHit raycastHit, int layerMask = Physics.DefaultRaycastLayers)
         {
-            return Physics.Raycast(_player.View.GetRay(), out raycastHit, _interactionDistance, layerMask);
+            return Physics.Raycast(_player.View.GetRay(), out raycastHit, _interactionDistance)
+                && ((1 << raycastHit.collider.gameObject.layer) & layerMask) != 0;
         }
 
         private void ChangeGrabbedObjectColliderStates(bool grabbedObjectColliderState)

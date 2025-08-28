@@ -6,13 +6,14 @@ namespace BGJ_2025_2
     public class Rotator : MonoBehaviour
     {
         // Fields
-        [SerializeField] private Vector3 _rotationSpeed;
+        [SerializeField] private Vector3 _speed;
+        [SerializeField] private Space _space;
 
 
         // Methods
         private void Update()
         {
-            transform.Rotate(_rotationSpeed * Time.deltaTime);
+            transform.Rotate(_speed * Time.deltaTime, _space);
         }
     }
 }
