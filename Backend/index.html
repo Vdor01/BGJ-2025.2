@@ -73,7 +73,7 @@
                     <th class="timestamp">Timestamp</th>
                 </tr>
                 <tr>
-                    <td colspan="4">No data in the database</td>
+                    <td colspan="4">Data is loading...</td>
                 </tr>
             </table>
         </div>
@@ -101,16 +101,24 @@
                         res.text().then(text => console.log(text));
                     } else {
                         res.json().then(res => {
-                            res.forEach((data, index) => {
+                            console.log(res);
+                            if (res.length == 0) {
                                 str += `<tr>
+                                    <td colspan="4">No data in the database</td>
+                                </tr></table>`;
+                                container.innerHTML = str;
+                            } else {
+                                res.forEach((data, index) => {
+                                    str += `<tr>
                                     <td class="id">${data[0]}</td>
                                     <td class="name">${data[1]}</td>
                                     <td class="score">${data[2]}</td>
                                     <td class="timestamp">${data[3]}</td>
                                 </tr>`;
-                            });
-                            str += `</table>`;
-                            container.innerHTML = str;
+                                });
+                                str += `</table>`;
+                                container.innerHTML = str;
+                            }
                         }
                         );
                     }
