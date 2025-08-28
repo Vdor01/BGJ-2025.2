@@ -87,21 +87,21 @@
                 <th class="score">Score</th>
                 <th class="timestamp">Timestamp</th>
             </tr>`;
-        console.log("Hostname:", window.location.origin + "/getleaderboard");
+        console.log("BaseURL:", window.location.origin);
         if (window.location.hostname == "bgj20252.eu.pythonanywhere.com") {
             // fetch real data
             fetch(window.location.origin + "/getleaderboard").then(res => {
                 if (res.status != 200) {
                     console.log("Error:", res.status);
                     console.log(res.statusText);
-                    res.text().then(text => console.log(text));
+                    res.text().then(text => console.log(text), err => console.log("Error:", err));
                 } else {
                     if (res.headers.get("Content-Type") != "application/json") {
                         console.log("Returned data is not JSON:");
-                        res.text().then(text => console.log(text));
+                        res.text().then(text => console.log(text), err => console.log("Error:", err));
                     } else {
                         res.json().then(res => {
-                            console.log(res);
+                            console.log("Fetch results:", res);
                             if (res.length == 0) {
                                 str += `<tr>
                                     <td colspan="4">No data in the database</td>
@@ -119,11 +119,12 @@
                                 str += `</table>`;
                                 container.innerHTML = str;
                             }
-                        }
+                        }, err => console.log("Error:", err)
                         );
                     }
                 }
-            });
+            }, err => console.log("Fetch rrror:", err)
+            );
         } else {
             // load dummy test-data
             [
