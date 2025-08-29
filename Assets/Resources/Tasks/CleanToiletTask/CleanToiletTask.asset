@@ -16,4 +16,3 @@ MonoBehaviour:
   displayName: Clean up the toilet
   taskStepPrefabs:
   - {fileID: 4783478235749397457, guid: 0b2eb533f4e52724ab1808b1fc32d619, type: 3}
-  - {fileID: 0}

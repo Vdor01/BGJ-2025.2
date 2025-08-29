@@ -1,4 +1,5 @@
 using BGJ_2025_2.Game.Events;
+using BGJ_2025_2.Game.Interactions;
 using UnityEngine;
 
 namespace BGJ_2025_2.Game.Tasks

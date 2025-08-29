@@ -42,6 +42,12 @@ namespace BGJ_2025_2.Game.Tasks
             {
                 GameEventsManager.Instance.taskEvents.TaskStateChange(task);
             }
+
+            // For testing purposes, set all tasks to CAN_START
+            foreach (Task task in taskMap.Values)
+            {
+                ChangeTaskState(task.info.id, TaskState.CAN_START);
+            }
         }
 
         private void ChangeTaskState(string id, TaskState state)

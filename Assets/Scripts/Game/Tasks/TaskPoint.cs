@@ -27,7 +27,6 @@ namespace BGJ_2025_2.Game.Tasks
             inputs = new Inputs();
 
             inputs.Player.Use.performed += ctx => SubmitPressed();
-            inputs.Player.Use.canceled += ctx => SubmitPressed();
         }
 
         private void OnEnable()
@@ -49,11 +48,6 @@ namespace BGJ_2025_2.Game.Tasks
                 playerIsNear = 0;
                 return;
             }
-
-            // Testing purposes only - remove later
-            GameEventsManager.Instance.taskEvents.StartTask(taskId);
-            GameEventsManager.Instance.taskEvents.AdvanceTask(taskId);
-            GameEventsManager.Instance.taskEvents.FinishTask(taskId);
 
             if (currentTaskState.Equals(TaskState.CAN_START) && startPoint)
             {
