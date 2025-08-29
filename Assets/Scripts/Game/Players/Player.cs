@@ -20,6 +20,8 @@ namespace BGJ_2025_2.Game.Players
         [SerializeField] private PlayerView _view;
         [SerializeField] private PlayerInteraction _interaction;
         [SerializeField] private PlayerAppearance _appearance;
+        [SerializeField] private PlayerAudio _audio;
+        [SerializeField] private PlayerData _data;
         private Room _currentRoom;
 
 
@@ -32,6 +34,8 @@ namespace BGJ_2025_2.Game.Players
         public PlayerView View => _view;
         public PlayerInteraction Interaction => _interaction;
         public PlayerAppearance Appearance => _appearance;
+        public PlayerAudio Audio => _audio;
+        public PlayerData Data => _data;
         public Room CurrentRoom => _currentRoom;
 
 
@@ -49,6 +53,31 @@ namespace BGJ_2025_2.Game.Players
 #endif
                 }
             }
+        }
+
+        public void Play()
+        {
+
+        }
+
+        public void End()
+        {
+
+        }
+
+        public void Pause()
+        {
+
+        }
+
+        public void Unpause()
+        {
+
+        }
+
+        public void Reload()
+        {
+            _data.Reload();
         }
 
         public void Fire()

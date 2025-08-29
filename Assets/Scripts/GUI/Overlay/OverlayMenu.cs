@@ -1,6 +1,7 @@
 using BGJ_2025_2.Game.Interactions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace BGJ_2025_2.GUI.Overlay
 {
@@ -14,8 +15,14 @@ namespace BGJ_2025_2.GUI.Overlay
         // Fields
         [SerializeField] private TextMeshProUGUI _topInteractionLabel;
         [SerializeField] private TextMeshProUGUI _bottomInteractionLabel;
-        IInteractable _previousPlayerInteractable;
-        IInteractable _playerInteractable;
+        [SerializeField] private TextMeshProUGUI _dayLabel;
+        [SerializeField] private Slider _dayProgressBar;
+        [SerializeField] private TextMeshProUGUI _dayProgressLabel;
+        [SerializeField] private GameObject _map;
+        private IInteractable _previousPlayerInteractable;
+        private IInteractable _playerInteractable;
+        private int _previousDay = -1;
+        private int _previousProgressPercentage = -1;
 
 
         // Methods
@@ -34,6 +41,7 @@ namespace BGJ_2025_2.GUI.Overlay
         {
             _topInteractionLabel.gameObject.SetActive(false);
             _bottomInteractionLabel.gameObject.SetActive(false);
+            _map.SetActive(false);
         }
 
         // Beállítja a kurzor feletti és alatti labeleket, ha a játékos épp valamilyen interaktálható tárgyat néz.
@@ -94,6 +102,33 @@ namespace BGJ_2025_2.GUI.Overlay
             }
 
             _previousPlayerInteractable = _playerInteractable;
+
+            if (_previousDay < 0 || _previousDay != Game.Day)
+            {
+                _previousDay = Game.Day;
+                _dayLabel.SetText($"Day {_previousDay}");
+            }
+
+            if (_previousProgressPercentage < 0 || _previousProgressPercentage != Game.ProgressPercentage)
+            {
+                _previousProgressPercentage = Game.ProgressPercentage;
+
+                _dayProgressBar.value = Game.Progress;
+                _dayProgressLabel.SetText($"{_previousProgressPercentage}%");
+            }
+        }
+
+        public override void Cancel()
+        {
+            if (_map.activeSelf)
+            {
+                _map.SetActive(false);
+            }
+        }
+
+        public void ToggleMap()
+        {
+            _map.SetActive(!_map.activeSelf);
         }
     }
 }

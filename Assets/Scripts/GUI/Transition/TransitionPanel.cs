@@ -24,7 +24,6 @@ namespace BGJ_2025_2.GUI
         [SerializeField] private Color _labelColor = _DefaultLabelColor;
         [SerializeField] private float _backgroundTransitionDuration = _DefaultBackgroundTransitionDuration;
         [SerializeField] private float _labelTransitionDuration = _DefaultLabelTransitionDuration;
-        private Coroutine _currentTransition;
 #if UNITY_EDITOR
         [Header("Development options")]
         [SerializeField] private bool _skip;
@@ -48,14 +47,16 @@ namespace BGJ_2025_2.GUI
 #if UNITY_EDITOR
             if (_skip)
             {
+                actionAfter?.Invoke();
                 gameObject.SetActive(false);
+
                 return;
             }
 #endif
             Enable();
+            StopAllCoroutines();
 
-            _currentTransition = StartCoroutine(TransitionCoroutine(_TransparentColor, _backgroundColor,
-                _TransparentColor, _labelColor, actionAfter, text));
+            StartCoroutine(TransitionInCoroutine(actionAfter, text));
         }
 
         public void TransitionOut(Action actionAfter = null, string text = null)
@@ -63,20 +64,21 @@ namespace BGJ_2025_2.GUI
 #if UNITY_EDITOR
             if (_skip)
             {
+                actionAfter?.Invoke();
                 gameObject.SetActive(false);
+
                 return;
             }
 #endif
             Enable();
+            StopAllCoroutines();
 
-            _currentTransition = StartCoroutine(TransitionCoroutine(_backgroundColor, _TransparentColor,
-                _labelColor, _TransparentColor,
-                () =>
-                {
-                    actionAfter?.Invoke();
+            StartCoroutine(TransitionOutCoroutine(() =>
+            {
+                actionAfter?.Invoke();
 
-                    Disable();
-                }, text));
+                Disable();
+            }, text));
         }
 
         public void TransitionInAndOut(Action actionBetween = null, Action actionAfter = null, string text = null)
@@ -89,16 +91,14 @@ namespace BGJ_2025_2.GUI
             }, text);
         }
 
-        private IEnumerator TransitionCoroutine(Color baseBackgroundColor, Color targetBackgroundColor,
-            Color baseLabelColor, Color targetLabelColor,
-            Action actionAfter = null, string text = null)
+        private IEnumerator TransitionInCoroutine(Action actionAfter = null, string text = null)
         {
-            _background.color = baseBackgroundColor;
-
             float elapsedTime = 0f;
+
+            _background.color = _TransparentColor;
             while (elapsedTime < _backgroundTransitionDuration)
             {
-                _background.color = Color.Lerp(baseBackgroundColor, targetBackgroundColor, elapsedTime);
+                _background.color = Color.Lerp(_TransparentColor, _backgroundColor, elapsedTime);
 
                 elapsedTime += Time.deltaTime;
 
@@ -107,14 +107,14 @@ namespace BGJ_2025_2.GUI
 
             if (text != null)
             {
-                _label.color = baseLabelColor;
                 _label.SetText(text);
+                _label.color = _TransparentColor;
                 _label.gameObject.SetActive(true);
 
                 elapsedTime = 0f;
                 while (elapsedTime < _labelTransitionDuration)
                 {
-                    _label.color = Color.Lerp(baseLabelColor, targetLabelColor, elapsedTime);
+                    _label.color = Color.Lerp(_TransparentColor, _labelColor, elapsedTime);
 
                     elapsedTime += Time.deltaTime;
 
@@ -123,7 +123,42 @@ namespace BGJ_2025_2.GUI
             }
 
             actionAfter?.Invoke();
-            _currentTransition = null;
+        }
+
+        private IEnumerator TransitionOutCoroutine(Action actionAfter = null, string text = null)
+        {
+            float elapsedTime;
+
+            if (text != null)
+            {
+                _label.SetText(text);
+                _label.color = _labelColor;
+                _label.gameObject.SetActive(true);
+
+                elapsedTime = 0f;
+                while (elapsedTime < _labelTransitionDuration)
+                {
+                    _label.color = Color.Lerp(_labelColor, _TransparentColor, elapsedTime);
+
+                    elapsedTime += Time.deltaTime;
+
+                    yield return null;
+                }
+            }
+
+            elapsedTime = 0f;
+
+            _background.color = _backgroundColor;
+            while (elapsedTime < _backgroundTransitionDuration)
+            {
+                _background.color = Color.Lerp(_backgroundColor, _TransparentColor, elapsedTime);
+
+                elapsedTime += Time.deltaTime;
+
+                yield return null;
+            }
+
+            actionAfter?.Invoke();
         }
 
         public void Enable()
@@ -136,10 +171,7 @@ namespace BGJ_2025_2.GUI
 
         public void Disable()
         {
-            if (_currentTransition != null)
-            {
-                StopCoroutine(_currentTransition);
-            }
+            StopAllCoroutines();
 
             if (gameObject.activeSelf)
             {

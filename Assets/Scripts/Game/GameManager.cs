@@ -17,6 +17,7 @@ namespace BGJ_2025_2.Game
     {
         // Fields
         private const int _TargetFrameRate = 60;
+        public const int DayDuration = 300;
 
         [SerializeField] private GUIManager _gui;
         [SerializeField] private EventSystem _eventSystem;
@@ -30,6 +31,9 @@ namespace BGJ_2025_2.Game
         private int _elapsedFrames;
         private int _framesPerSecond;
         private bool _isRunning;
+        private bool _isPaused;
+        private int _day = 1;
+        private float _elapsedTime;
 
 
         // Properties
@@ -42,6 +46,11 @@ namespace BGJ_2025_2.Game
         public LeaderboardHandler Leaderboards => _leaderboards;
         public int FramesPerSecond => _framesPerSecond;
         public bool IsRunning => _isRunning;
+        public bool IsPaused => _isPaused;
+        public int Day => _day;
+        public float ElapsedTime => _elapsedTime;
+        public float Progress => _elapsedTime / DayDuration;
+        public int ProgressPercentage => (int)(Progress * 100);
 
 
         // Methods
@@ -53,12 +62,24 @@ namespace BGJ_2025_2.Game
         private void Start()
         {
             _player.gameObject.SetActive(false);
+            _office.Boss.gameObject.SetActive(false);
 
             EnableMenuRoom();
         }
 
         private void Update()
         {
+            if (_isRunning)
+            {
+                _elapsedTime += Time.deltaTime;
+
+                // Jelenlegi nap vége és új kezdése
+                if (_elapsedTime >= DayDuration)
+                {
+
+                }
+            }
+
             _elapsedSecond += Time.deltaTime;
 
             if (_elapsedSecond >= 1f)
@@ -76,18 +97,63 @@ namespace BGJ_2025_2.Game
             DisableMenuRoom();
 
             _player.gameObject.SetActive(true);
+            _player.Play();
+
+            _office.Boss.gameObject.SetActive(true);
+            _office.Boss.Play();
+
             _isRunning = true;
         }
 
         public void End()
         {
+            _player.gameObject.SetActive(false);
+            _player.End();
 
+            _office.Boss.gameObject.SetActive(false);
+            _office.Boss.End();
+
+            _isRunning = false;
+        }
+
+        public void Pause()
+        {
+            _player.Pause();
+            _office.Boss.Pause();
+
+            _isPaused = true;
+        }
+
+        public void Unpause()
+        {
+            _player.Unpause();
+            _office.Boss.Unpause();
+
+            _isPaused = false;
         }
 
         public void Reload()
         {
             _player.gameObject.SetActive(false);
+            _player.Reload();
+
+            _office.Boss.gameObject.SetActive(false);
+            _office.Boss.Reload();
+
             _isRunning = false;
+            _day = 1;
+            _elapsedTime = 0f;
+        }
+
+        public void NextDay()
+        {
+            ++_day;
+            _elapsedTime = 0f;
+        }
+
+        public void EndDay()
+        {
+
         }
 
         public void EnableMenuRoom()

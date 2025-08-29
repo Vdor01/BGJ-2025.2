@@ -38,8 +38,11 @@ namespace BGJ_2025_2.Game.Items
 
         public void Use()
         {
+            if (_cookies.Count == 0) return;
+
             TakeOut();
 
+            _office.Player.Audio.Eat();
             _office.Boss.NotifyFromCookieJar();
         }
 

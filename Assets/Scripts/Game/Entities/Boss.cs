@@ -17,7 +17,7 @@ namespace BGJ_2025_2.Game.Entities
         private const string _AnimatorStateName = "IsWandering";
         private const float _TargetDistanceMargin = 0.1f;
         private const float _StuckVelocityMargin = 0.1f;
-        private const float _StuckDuration = 1f;
+        private const float _StuckDuration = 0.8f;
         private const float _DefaultFieldOfView = 90f;
         private const float _DefaultWalkingSpeed = 4.5f;
         private const float _DefaultRunningSpeed = 7f;
@@ -74,11 +74,6 @@ namespace BGJ_2025_2.Game.Entities
         {
             _dominaceAssertionDirection = Vector3.up * _dominanceAssertionSpeed;
             _previousRooms = new(_roomMemorySize);
-        }
-
-        private void Start()
-        {
-            Reload();
         }
 
         private void Update()
@@ -158,7 +153,7 @@ namespace BGJ_2025_2.Game.Entities
                     if (_elapsedStuckDuration >= _StuckDuration)
                     {
 #if UNITY_EDITOR
-                        Log("Got stuck :,(");
+                        Log($"Got stuck :,( (distance: {Vector3.Distance(new Vector3(transform.position.x, 0f, transform.position.z), position)})");
 #endif
                         AssertDominance(() =>
                         {
@@ -247,7 +242,8 @@ namespace BGJ_2025_2.Game.Entities
             do
             {
                 randomPosition = _currentRoom.GetRandomPosition();
-            } while (Vector3.Distance(randomPosition, transform.position) < _minWanderDistance);
+            } while (Vector3.Distance(randomPosition, new Vector3(transform.position.x, 0f, transform.position.y))
+            < _minWanderDistance * _currentRoom.WanderCount);
 
             WanderToPosition(_currentRoom.GetRandomPosition(), () =>
             {
@@ -303,9 +299,13 @@ namespace BGJ_2025_2.Game.Entities
 
         public void StartChasingPlayer()
         {
+            if (_isChasing) return;
+
 #if UNITY_EDITOR
             Log("Started chasing player! >:(");
 #endif
+            _office.Player.Audio.Alert();
+
             _isWandering = false;
             _isChasing = true;
             _agent.isStopped = false;
@@ -344,10 +344,20 @@ namespace BGJ_2025_2.Game.Entities
             {
                 return Physics.Raycast(_rayOrigin.position, (playerPosition - _rayOrigin.position).normalized,
                     out _raycastHit, float.PositiveInfinity, Physics.AllLayers)
-                    && _raycastHit.collider.gameObject.CompareTag("Player");
+                    && _raycastHit.collider.gameObject.CompareTag(_PlayerTag);
             }
 
             return false;
+        }
+
+        public bool IsKindaSeeingPlayer()
+        {
+            Vector3 playerPosition = _office.Player.transform.position;
+            int layerMask = (1 << 2) | (1 << 6) | (1 << 7);
+
+            return Physics.Raycast(_rayOrigin.position, (playerPosition - _rayOrigin.position).normalized,
+                out _raycastHit, float.PositiveInfinity, layerMask, QueryTriggerInteraction.Ignore)
+                && _raycastHit.collider.gameObject.CompareTag(_PlayerTag);
         }
 
         public bool IsInSameRoomAsPlayer()
@@ -374,7 +384,7 @@ namespace BGJ_2025_2.Game.Entities
 
         public void NotifyFromCookieJar()
         {
-            if (IsSeeingPlayer() || IsInSameRoomAsPlayer())
+            if (IsKindaSeeingPlayer() || IsInSameRoomAsPlayer())
             {
 #if UNITY_EDITOR
                 Log("Noticed player taking cookie from jar! >:(");
@@ -386,7 +396,7 @@ namespace BGJ_2025_2.Game.Entities
 
         public void NotifyFromSabotage()
         {
-            if (IsSeeingPlayer() || IsInSameRoomAsPlayer())
+            if (IsKindaSeeingPlayer() || IsInSameRoomAsPlayer())
             {
 #if UNITY_EDITOR
                 Log("Noticed player sabotaging the office! >:(");
@@ -448,6 +458,28 @@ namespace BGJ_2025_2.Game.Entities
             }
         }
 
+        public void Play()
+        {
+            _agent.isStopped = false;
+
+            Reload();
+        }
+
+        public void End()
+        {
+            _agent.isStopped = true;
+        }
+
+        public void Pause()
+        {
+            _agent.isStopped = true;
+        }
+
+        public void Unpause()
+        {
+            _agent.isStopped = false;
+        }
+
         private static void Log(string message)
         {
             Debug.Log($"[BOSS] {message}");
@@ -455,7 +487,7 @@ namespace BGJ_2025_2.Game.Entities
 
         private void OnDrawGizmos()
         {
-            Debug.DrawRay(_rayOrigin.position, (_office.Player.transform.position - _rayOrigin.transform.position).normalized,
+            Debug.DrawRay(_rayOrigin.position, (_office.Player.transform.position - _rayOrigin.transform.position),
                 Color.red);
         }
     }
