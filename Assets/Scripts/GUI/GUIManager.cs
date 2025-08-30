@@ -1,5 +1,7 @@
 using BGJ_2025_2.Game;
 using BGJ_2025_2.GUI.Credits;
+using BGJ_2025_2.GUI.Finish;
+using BGJ_2025_2.GUI.Leaderboard;
 using BGJ_2025_2.GUI.Main;
 using BGJ_2025_2.GUI.Overlay;
 using BGJ_2025_2.GUI.Pause;
@@ -25,9 +27,11 @@ namespace BGJ_2025_2.GUI
         [SerializeField] private TextMeshProUGUI _framesPerSecondLabel;
         [SerializeField] private TransitionPanel _transitionPanel;
         [SerializeField] private MainMenu _mainMenu;
+        [SerializeField] private LeaderboardMenu _leaderboardMenu;
         [SerializeField] private CreditsMenu _creditsMenu;
         [SerializeField] private OverlayMenu _overlayMenu;
         [SerializeField] private PauseMenu _pauseMenu;
+        [SerializeField] private FinishMenu _finishMenu;
         private Inputs _inputs;
         private Menu[] _menus;
         private List<Menu> _openMenus;
@@ -40,9 +44,11 @@ namespace BGJ_2025_2.GUI
 
         public TransitionPanel TransitionPanel => _transitionPanel;
         public MainMenu MainMenu => _mainMenu;
+        public LeaderboardMenu LeaderboardMenu => _leaderboardMenu;
         public CreditsMenu CreditsMenu => _creditsMenu;
         public OverlayMenu OverlayMenu => _overlayMenu;
         public PauseMenu PauseMenu => _pauseMenu;
+        public FinishMenu FinishMenu => _finishMenu;
 
 
         // Methods
@@ -61,8 +67,11 @@ namespace BGJ_2025_2.GUI
             _menus = new Menu[]
             {
                 _mainMenu,
+                _leaderboardMenu,
                 _creditsMenu,
-                _overlayMenu
+                _overlayMenu,
+                _pauseMenu,
+                _finishMenu
             };
 
             _openMenus = new(Mathf.NextPowerOfTwo(_menus.Length));

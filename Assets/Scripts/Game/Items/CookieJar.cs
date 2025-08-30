@@ -26,6 +26,8 @@ namespace BGJ_2025_2.Game.Items
         public string Name => "Cookie Jar";
         public string Usage => $"Take a cookie ({_cookies.Count} left)";
         public int CookieCount => _cookies.Count;
+        public bool IsEmpty => _cookies.Count == 0;
+        public bool IsNotEmpty => !IsEmpty;
         public float Fullness => _cookies.Count / (float)DefaultCookieCount;
         public float Emptiness => 1f - Fullness;
 
@@ -38,21 +40,27 @@ namespace BGJ_2025_2.Game.Items
 
         public void Use()
         {
-            if (_cookies.Count == 0) return;
+            if (IsEmpty) return;
 
             TakeOut();
 
+            ++_office.Player.Data.Cookies;
             _office.Player.Audio.Eat();
             _office.Boss.NotifyFromCookieJar();
+
+            if (IsEmpty)
+            {
+                _office.Game.NextDay();
+            }
         }
 
         public void EmptyOut()
         {
             foreach (Cookie cookie in _cookies)
             {
-                _cookies.Remove(cookie);
                 Destroy(cookie.gameObject);
             }
+            _cookies.Clear();
         }
 
         public void FillUp(int cookieCount = DefaultCookieCount)
@@ -88,6 +96,11 @@ namespace BGJ_2025_2.Game.Items
                 _cookies.RemoveAt(cookieIndex);
                 Destroy(takenOutCookie.gameObject);
             }
+        }
+
+        public void Reload()
+        {
+            AddSome(CookieCount - _cookies.Count);
         }
     }
 }

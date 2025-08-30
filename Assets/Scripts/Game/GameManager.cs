@@ -96,6 +96,8 @@ namespace BGJ_2025_2.Game
         {
             DisableMenuRoom();
 
+            Reload();
+
             _player.gameObject.SetActive(true);
             _player.Play();
 
@@ -107,11 +109,21 @@ namespace BGJ_2025_2.Game
 
         public void End()
         {
-            _player.gameObject.SetActive(false);
-            _player.End();
+            _gui.TransitionPanel.TransitionInAndOut(() =>
+            {
+                Cursor.lockState = CursorLockMode.None;
 
-            _office.Boss.gameObject.SetActive(false);
-            _office.Boss.End();
+                EnableMenuRoom();
+
+                _player.gameObject.SetActive(false);
+                _player.End();
+
+                _office.Boss.gameObject.SetActive(false);
+                _office.Boss.End();
+
+                _gui.OverlayMenu.Close();
+                _gui.FinishMenu.Open();
+            });
 
             _isRunning = false;
         }
@@ -139,6 +151,8 @@ namespace BGJ_2025_2.Game
 
             _office.Boss.gameObject.SetActive(false);
             _office.Boss.Reload();
+
+            _office.CookieJar.Reload();
 
             _isRunning = false;
             _day = 1;

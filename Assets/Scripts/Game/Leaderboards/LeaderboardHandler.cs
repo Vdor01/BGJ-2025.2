@@ -13,11 +13,12 @@ namespace BGJ_2025_2.Game.Leaderboards
         private const string _QueryURL = "https://bgj20252.eu.pythonanywhere.com/getleaderboard";
         private const string _SubmitURL = "https://bgj20252.eu.pythonanywhere.com/submit";
         private const string _ClearURL = "https://bgj20252.eu.pythonanywhere.com/deleteall";
-        private const int _MaxCapacity = 16;
+        private const int _MaxCapacity = 10;
 
         [SerializeField] private GameManager _game;
 
-        private readonly List<LeaderboardEntry> _entries = new(_MaxCapacity);
+        private readonly List<LeaderboardEntry> _entries = new(Mathf.NextPowerOfTwo(_MaxCapacity));
+        private LeaderboardEntry _ownEntry;
 
 
         // Properties
@@ -26,6 +27,7 @@ namespace BGJ_2025_2.Game.Leaderboards
         public int Count => _entries.Count;
         public List<LeaderboardEntry> Entries => _entries;
         public LeaderboardEntry this[int index] => _entries[index];
+        public LeaderboardEntry OwnEntry => _ownEntry;
 
 
         // Methods

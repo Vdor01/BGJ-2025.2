@@ -23,6 +23,7 @@ namespace BGJ_2025_2.Game.Players
         [SerializeField] private PlayerAudio _audio;
         [SerializeField] private PlayerData _data;
         private Room _currentRoom;
+        private bool _isFired;
 
 
         // Properties
@@ -57,7 +58,9 @@ namespace BGJ_2025_2.Game.Players
 
         public void Play()
         {
+            _data.Reload();
 
+            Reload();
         }
 
         public void End()
@@ -77,11 +80,23 @@ namespace BGJ_2025_2.Game.Players
 
         public void Reload()
         {
-            _data.Reload();
+            _isFired = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            transform.SetPositionAndRotation(_game.Office.Kitchen.Center + Vector3.up, Quaternion.Euler(0f, 180f, 0f));
+        }
+
+        public void NextDay()
+        {
+            transform.position = _game.Office.Kitchen.Center + Vector3.up;
         }
 
         public void Fire()
         {
+            if (_isFired) return;
+
+            _data.Days = _game.Day;
+            _isFired = true;
+
             _game.End();
         }
     }

@@ -34,7 +34,7 @@ namespace BGJ_2025_2.GUI
         /// <summary>
         /// Megnyitja a menüt, ha be van zárva.
         /// </summary>
-        public void Open()
+        public virtual void Open()
         {
             if (IsOpen) return;
 
@@ -46,7 +46,7 @@ namespace BGJ_2025_2.GUI
         /// <summary>
         /// Bezárja a menüt, ha meg van nyitva.
         /// </summary>
-        public void Close()
+        public virtual void Close()
         {
             if (IsClosed) return;
 

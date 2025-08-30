@@ -53,6 +53,10 @@ namespace BGJ_2025_2.Game.Entities
         private Room _currentRoom;
         private int _currentRoomWanderCount;
         Vector3 _dominaceAssertionDirection;
+#if UNITY_EDITOR
+        [Header("Development options")]
+        [SerializeField] private bool _stayStill;
+#endif
 
 
         // Properties
@@ -214,7 +218,7 @@ namespace BGJ_2025_2.Game.Entities
                 }
                 else
                 {
-                    _alertness += _nervousness + _office.CookieJar.Emptiness / 2f;
+                    _alertness += _nervousness + _office.CookieJar.Emptiness / 2.5f;
 #if UNITY_EDITOR
                     Log($"Alertness increased: {_alertness}, jar cookie count: {_office.CookieJar.CookieCount}, jar emptiness: {_office.CookieJar.Emptiness}");
 #endif
@@ -371,15 +375,32 @@ namespace BGJ_2025_2.Game.Entities
             _alertness = 0f;
             _elapsedStuckDuration = 0f;
             _animator.SetBool(_AnimatorStateName, false);
+            StopChasingPlayer();
 
+#if UNITY_EDITOR
+            if (_stayStill)
+            {
+                Room randomRoom = _office.GetRandomRoom();
+                _previousRooms.Clear();
+                EnterRoom(_office.Kitchen);
+            }
+            else
+            {
+                Room randomRoom = _office.GetRandomRoom();
+                _previousRooms.Clear();
+                Warp(randomRoom.Center);
+                EnterRoom(randomRoom);
+
+                DecideNextAction();
+            }
+#else
             Room randomRoom = _office.GetRandomRoom();
             _previousRooms.Clear();
             Warp(randomRoom.Center);
             EnterRoom(randomRoom);
 
-            StopChasingPlayer();
-
             DecideNextAction();
+#endif
         }
 
         public void NotifyFromCookieJar()
