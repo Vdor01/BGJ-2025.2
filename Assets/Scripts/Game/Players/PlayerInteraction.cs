@@ -74,7 +74,7 @@ namespace BGJ_2025_2.Game.Players
                     _interactableObject = null;
                 }
             }
-            else if (_interactableObject != null)
+            else if (_interactableObject != null || _interactable != null)
             {
                 _interactableObject = null;
 

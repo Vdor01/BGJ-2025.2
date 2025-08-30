@@ -1,6 +1,6 @@
 # BGJ 2025.2
 
-itch.io oldal: [https://vdor01.itch.io/bgj-2025-2](https://vdor01.itch.io/bgj-2025-2)
+itch.io oldal: [https://vdor01.itch.io/cookie-snitcher](https://vdor01.itch.io/cookie-snitcher)
 <details>
   <summary>Jelszó (annak, aki nincs hozzáadva)</summary>
   BGJ 2025.2
