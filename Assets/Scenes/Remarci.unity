@@ -16208,6 +16208,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _game: {fileID: 632339820}
+  activeTaskNumber: 0
+  taskToday: {fileID: 0}
+  tasks: []
 --- !u!1 &784883900
 GameObject:
   m_ObjectHideFlags: 0
@@ -22000,7 +22003,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1000831856
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28245,7 +28248,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc3c541d6f44a4b479c46e0dbfbbd03a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1419079930}
   taskInfoForPoint: {fileID: 11400000, guid: d779e28d9cb11ac4e8107d9808eabf8a, type: 2}
   startPoint: 1
   finishPoint: 1
