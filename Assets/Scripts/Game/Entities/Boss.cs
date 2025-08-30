@@ -53,6 +53,8 @@ namespace BGJ_2025_2.Game.Entities
         private Room _currentRoom;
         private int _currentRoomWanderCount;
         Vector3 _dominaceAssertionDirection;
+        private bool _isRunning;
+        private bool _isPaused;
 #if UNITY_EDITOR
         [Header("Development options")]
         [SerializeField] private bool _stayStill;

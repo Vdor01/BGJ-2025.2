@@ -60,6 +60,8 @@ namespace BGJ_2025_2.GUI
 
             _inputs.UI.Map.performed += callbackContext => ToggleMap(callbackContext);
 
+            _inputs.UI.Tasks.performed += callbackContext => ToggleTaskDescriptions(callbackContext);
+
             _inputs.UI.FPS.performed += callbackContext => ToggleFramesPerSecondCounter(callbackContext);
 
             _framesPerSecondLabel.gameObject.SetActive(false);
@@ -131,9 +133,17 @@ namespace BGJ_2025_2.GUI
 
         public void ToggleMap(InputAction.CallbackContext callbackContext)
         {
-            if (_game.IsRunning)
+            if (_game.IsRunning && !_game.IsPaused)
             {
                 _overlayMenu.ToggleMap();
+            }
+        }
+
+        public void ToggleTaskDescriptions(InputAction.CallbackContext callbackContext)
+        {
+            if (_game.IsRunning && !_game.IsPaused)
+            {
+                _overlayMenu.ToggleTaskDescriptions();
             }
         }
 

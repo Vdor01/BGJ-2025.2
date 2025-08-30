@@ -24,6 +24,8 @@ namespace BGJ_2025_2.Game.Players
         [SerializeField] private PlayerData _data;
         private Room _currentRoom;
         private bool _isFired;
+        private bool _isRunning;
+        private bool _isPaused;
 
 
         // Properties

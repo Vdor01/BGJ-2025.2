@@ -13,12 +13,19 @@ namespace BGJ_2025_2.GUI.Overlay
     public class OverlayMenu : Menu
     {
         // Fields
+        private static readonly Vector2 _DefaultCursorSize = new(15, 15);
+        private static readonly Vector2 _LargeCursorSize = new(35, 35);
+
         [SerializeField] private TextMeshProUGUI _topInteractionLabel;
         [SerializeField] private TextMeshProUGUI _bottomInteractionLabel;
+        [SerializeField] private Image _cursor;
+        [SerializeField] private Sprite _grabSprite;
+        [SerializeField] private Sprite _pointSprite;
         [SerializeField] private TextMeshProUGUI _dayLabel;
         [SerializeField] private Slider _dayProgressBar;
         [SerializeField] private TextMeshProUGUI _dayProgressLabel;
         [SerializeField] private GameObject _map;
+        [SerializeField] private GameObject _taskDescriptions;
         private IInteractable _previousPlayerInteractable;
         private IInteractable _playerInteractable;
         private int _previousDay = -1;
@@ -61,6 +68,56 @@ namespace BGJ_2025_2.GUI.Overlay
                 // Kurzor feletti label szövegének beállítása a tárgy nevére
                 _topInteractionLabel.SetText(_playerInteractable.Name);
 
+                // Felvehetõ / letehetõ / eldobható
+                if (_playerInteractable.IsGrabbable)
+                {
+                    // Az elõ frame-nél még nem olyan volt
+                    if (_previousPlayerInteractable == null)
+                    {
+                        _cursor.sprite = _grabSprite;
+                        _cursor.rectTransform.sizeDelta = _LargeCursorSize;
+                    }
+                }
+                else
+                {
+                    // Az elõ frame-nél még olyan volt
+                    if (_previousPlayerInteractable == null)
+                    {
+                        _cursor.sprite = null;
+                        _cursor.rectTransform.sizeDelta = _DefaultCursorSize;
+                    }
+                    else if (_previousPlayerInteractable.IsUsable)
+                    {
+                        _cursor.sprite = _pointSprite;
+                        _cursor.rectTransform.sizeDelta = _LargeCursorSize;
+                    }
+                }
+
+                // Használható tárgy
+                if (_playerInteractable.IsUsable)
+                {
+                    // Az elõ frame-nél még nem olyan volt
+                    if (_previousPlayerInteractable == null)
+                    {
+                        _cursor.sprite = _pointSprite;
+                        _cursor.rectTransform.sizeDelta = _LargeCursorSize;
+                    }
+                }
+                else
+                {
+                    // Az elõ frame-nél még olyan volt
+                    if (_previousPlayerInteractable == null)
+                    {
+                        _cursor.sprite = null;
+                        _cursor.rectTransform.sizeDelta = _DefaultCursorSize;
+                    }
+                    else if (_previousPlayerInteractable.IsGrabbable)
+                    {
+                        _cursor.sprite = _grabSprite;
+                        _cursor.rectTransform.sizeDelta = _LargeCursorSize;
+                    }
+                }
+
                 // Tartozik az interaktálható tárgyhoz leírás
                 if (_playerInteractable.IsDescriptable)
                 {
@@ -80,9 +137,13 @@ namespace BGJ_2025_2.GUI.Overlay
                 else if (_playerInteractable.IsUsable)
                 {
                     // Az elõzõ frame-nél még nem interaktálható dolgot nézett, ezért aktiválni kell a kurzor alatti labelt
+                    // A kurzort is frissíteni kell
                     if (_previousPlayerInteractable == null)
                     {
                         _bottomInteractionLabel.gameObject.SetActive(true);
+
+                        _cursor.sprite = _pointSprite;
+                        _cursor.rectTransform.sizeDelta = _LargeCursorSize;
                     }
 
                     // Ha van használati leírása is, akkor jelenjen meg
@@ -98,6 +159,9 @@ namespace BGJ_2025_2.GUI.Overlay
                 {
                     _topInteractionLabel.gameObject.SetActive(false);
                     _bottomInteractionLabel.gameObject.SetActive(false);
+
+                    _cursor.sprite = null;
+                    _cursor.rectTransform.sizeDelta = _DefaultCursorSize;
                 }
             }
 
@@ -126,9 +190,34 @@ namespace BGJ_2025_2.GUI.Overlay
             }
         }
 
+        public void OpenMap()
+        {
+            _map.SetActive(true);
+        }
+
+        public void CloseMap()
+        {
+            _map.SetActive(false);
+        }
+
         public void ToggleMap()
         {
             _map.SetActive(!_map.activeSelf);
+        }
+
+        public void OpenTaskDescriptions()
+        {
+            _taskDescriptions.SetActive(true);
+        }
+
+        public void CloseTaskDescriptions()
+        {
+            _taskDescriptions.SetActive(false);
+        }
+
+        public void ToggleTaskDescriptions()
+        {
+            _taskDescriptions.SetActive(!_taskDescriptions.activeSelf);
         }
     }
 }
