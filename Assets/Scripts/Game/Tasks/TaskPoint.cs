@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace BGJ_2025_2.Game.Tasks
 {
+    [AddComponentMenu("BGJ_2025_2/Game/Tasks/Task Point")]
     public class TaskPoint : MonoBehaviour
     {
-        public Player player;
         private Inputs inputs;
 
         [Header("Task")]

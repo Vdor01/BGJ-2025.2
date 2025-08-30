@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d35e38c4ace8ec4c805b468034eadb5, type: 3}
+  m_Name: GetDecisionTask
+  m_EditorClassIdentifier: 
+  <id>k__BackingField: GetDecisionTask
+  displayName: Get the new decision
+  taskStepPrefabs:
+  - {fileID: 5839374421535374259, guid: 98563c9f8eff2bc41872ca843172f313, type: 3}

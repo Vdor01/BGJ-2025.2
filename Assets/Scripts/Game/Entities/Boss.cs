@@ -503,7 +503,7 @@ namespace BGJ_2025_2.Game.Entities
 
         private static void Log(string message)
         {
-            Debug.Log($"[BOSS] {message}");
+            //Debug.Log($"[BOSS] {message}");
         }
 
         private void OnDrawGizmos()

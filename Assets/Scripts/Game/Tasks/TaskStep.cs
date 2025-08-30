@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace BGJ_2025_2.Game.Tasks
 {
+    [RequireComponent(typeof(MeshCollider))]
     public abstract class TaskStep : MonoBehaviour
     {
         private bool isFinished = false;

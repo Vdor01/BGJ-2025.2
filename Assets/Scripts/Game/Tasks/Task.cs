@@ -45,7 +45,9 @@ namespace BGJ_2025_2.Game.Tasks
             }
             else
             {
-                Debug.LogWarning("No more task steps available. TaskId=" + info.id + ", stepIndex=" + currentTaskStepIndex);
+                currentTaskStepIndex = 0;
+                taskStepPrefab = info.taskStepPrefabs[currentTaskStepIndex];
+                //Debug.LogWarning("No more task steps available. TaskId=" + info.id + ", stepIndex=" + currentTaskStepIndex);
             }
             return taskStepPrefab;
         }
