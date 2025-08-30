@@ -74,7 +74,7 @@ namespace BGJ_2025_2.Game.Players
                     _interactableObject = null;
                 }
             }
-            else if (_interactableObject != null || _interactable != null)
+            else
             {
                 _interactableObject = null;
 
@@ -183,7 +183,6 @@ namespace BGJ_2025_2.Game.Players
             Vector3 throwDirection = Raycast(out _raycastHit, float.PositiveInfinity)
                 ? (_raycastHit.point - _mainHand.transform.position).normalized
                 : _player.View.Forward;
-            Debug.Log(_raycastHit.collider.gameObject.name);
 
             _grabbedObjectRigidbody.isKinematic = false; ;
             _grabbedObjectRigidbody.AddForce(_throwPower * throwDirection, ForceMode.Impulse);

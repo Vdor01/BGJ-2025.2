@@ -76,7 +76,7 @@ namespace BGJ_2025_2.Game
                 // Jelenlegi nap vége és új kezdése
                 if (_elapsedTime >= DayDuration)
                 {
-                    NextDay();
+                    EndDay();
                 }
             }
 
@@ -94,9 +94,9 @@ namespace BGJ_2025_2.Game
 
         public void Play()
         {
+            _day = 1;
             Reload();
             DisableMenuRoom();
-
 
             _player.gameObject.SetActive(true);
             _player.Play();
@@ -105,10 +105,14 @@ namespace BGJ_2025_2.Game
             _office.Boss.Play();
 
             _isRunning = true;
+            _isPaused = false;
         }
 
         public void End()
         {
+            _isRunning = false;
+            _isPaused = false;
+
             _gui.TransitionPanel.TransitionInAndOut(() =>
             {
                 EnableMenuRoom();
@@ -125,8 +129,6 @@ namespace BGJ_2025_2.Game
                 _gui.OverlayMenu.Close();
                 _gui.FinishMenu.Open();
             });
-
-            _isRunning = false;
         }
 
         public void Pause()
@@ -147,30 +149,28 @@ namespace BGJ_2025_2.Game
 
         public void Reload()
         {
-            _player.gameObject.SetActive(false);
+            _player.gameObject.SetActive(true);
             _player.Reload();
 
-            _office.Boss.gameObject.SetActive(false);
+            _office.Boss.gameObject.SetActive(true);
             _office.Boss.Reload();
 
             _office.CookieJar.Reload();
             // TODO: taskokat reload-olni?
 
-            _isRunning = false;
-            _isPaused = false;
-            _day = 1;
             _elapsedTime = 0f;
         }
 
         public void NextDay()
         {
             ++_day;
-            _elapsedTime = 0f;
+
+            Reload();
         }
 
         public void EndDay()
         {
-
+            NextDay();
         }
 
         public void EnableMenuRoom()
