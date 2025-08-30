@@ -467,7 +467,7 @@ namespace BGJ_2025_2.Game.Entities
 
         public void End()
         {
-            _agent.isStopped = true;
+
         }
 
         public void Pause()

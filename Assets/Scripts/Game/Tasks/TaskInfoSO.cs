@@ -13,9 +13,9 @@ public class TaskInfoSO : ScriptableObject
 
     private void OnValidate()
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         id = this.name;
         UnityEditor.EditorUtility.SetDirty(this);
-        #endif
+#endif
     }
 }

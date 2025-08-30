@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public enum TaskState
 {
     NOT_AVAILABLE,

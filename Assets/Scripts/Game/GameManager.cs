@@ -76,7 +76,7 @@ namespace BGJ_2025_2.Game
                 // Jelenlegi nap vége és új kezdése
                 if (_elapsedTime >= DayDuration)
                 {
-
+                    NextDay();
                 }
             }
 
