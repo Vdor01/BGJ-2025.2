@@ -7,6 +7,6 @@
 
 @echo off
 
-set target="vdor01/bgj-2025-2"
+set target="vdor01/cookie-snitcher"
 
 butler push ..\..\Builds\Windows\Windows.zip %target%:windows --userversion-file version.txt

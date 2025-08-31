@@ -18816,7 +18816,6 @@ MonoBehaviour:
   _office: {fileID: 732202563}
   _tasks: {fileID: 784169815}
   _leaderboards: {fileID: 840340647}
-  _dayDuration: 45
 --- !u!1 &632661293
 GameObject:
   m_ObjectHideFlags: 0
@@ -21890,6 +21889,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Exit button
       objectReference: {fileID: 0}
+    - target: {fileID: 2102649922469310010, guid: 38df2df96698682419787093e1ca0bd2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2375195171774981335, guid: 38df2df96698682419787093e1ca0bd2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -21908,7 +21911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2375195171774981335, guid: 38df2df96698682419787093e1ca0bd2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OpenCredits
+      value: ExitGame
       objectReference: {fileID: 0}
     - target: {fileID: 2375195171774981335, guid: 38df2df96698682419787093e1ca0bd2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

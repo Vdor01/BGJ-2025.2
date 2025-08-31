@@ -27,8 +27,9 @@ namespace BGJ_2025_2.GUI.Main
                 _gui.OverlayMenu.Open();
                 Game.Play();
             }
-#elif UNITY_WEBGL
-            _exitButton.gameObject.SetActive(false);
+#endif
+#if UNITY_WEBGL
+            _exitButton.SetActive(false);
 #endif
         }
 

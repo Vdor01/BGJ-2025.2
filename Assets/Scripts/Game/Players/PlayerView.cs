@@ -10,7 +10,7 @@ namespace BGJ_2025_2.Game.Players
     public class PlayerView : PlayerComponent
     {
         // Fields
-        private const float _DefaultLookSensitivity = 2f;
+        private const float _DefaultLookSensitivity = 2.25f;
 
         [SerializeField] private Camera _camera;
         [SerializeField] private float _lookSensitivity = _DefaultLookSensitivity;
