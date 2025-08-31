@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ namespace BGJ_2025_2.Game.Audio
     [AddComponentMenu("BGJ 2025.2/Game/Audio/Sound manager")]
     public class SoundManager : MonoBehaviour
     {
+        private const float _SegmentLength = 60f / 112f * 48f;
+
         public AudioSource audioSource;
         public List<AudioClip> songs;
 
@@ -32,6 +35,7 @@ namespace BGJ_2025_2.Game.Audio
             PlaySong(1);
         }
 
+        /*
         void Update()
         {
             if (!audioSource.isPlaying && songs.Count > 0)
@@ -39,18 +43,34 @@ namespace BGJ_2025_2.Game.Audio
                 PlayNextSong();
             }
         }
+        */
 
         void PlaySong(int songNumber)
+        {
+            StartCoroutine(PlaySongCoroutine(songNumber));
+        }
+
+        private IEnumerator PlaySongCoroutine(int songNumber)
         {
             if (songNumber < 1 || songNumber > songs.Count)
             {
                 Debug.LogWarning("Invalid song number: " + songNumber);
-                return;
+                yield break;
             }
 
             currentSongIndex = songNumber;
             audioSource.clip = songs[songNumber - 1]; // list is 0-based
             audioSource.Play();
+
+            float elapsedTime = 0f;
+            while (elapsedTime < _SegmentLength)
+            {
+                elapsedTime += Time.deltaTime;
+
+                yield return null;
+            }
+
+            PlayNextSong();
         }
 
         void PlayNextSong()
@@ -63,6 +83,7 @@ namespace BGJ_2025_2.Game.Audio
 
             int[] possibleNext = songRules[currentSongIndex];
             int nextSong = possibleNext[Random.Range(0, possibleNext.Length)];
+            StopAllCoroutines();
             PlaySong(nextSong);
         }
     }

@@ -1,3 +1,4 @@
+using BGJ_2025_2.Game.Items;
 using BGJ_2025_2.Game.Leaderboards;
 using BGJ_2025_2.Game.Levels;
 using BGJ_2025_2.Game.Players;
@@ -177,6 +178,7 @@ namespace BGJ_2025_2.Game
         public void EndDay()
         {
             _player.Data.Tasks += _tasks.FinishedTaskCount;
+            _player.Data.Cookies += CookieJar.DefaultCookieCount - _office.CookieJar.CookieCount;
             _player.Data.Days += 1;
 
             if (_tasks.FinishedTaskCount < TaskHandler.MinTaskCount)

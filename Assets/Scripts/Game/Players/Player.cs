@@ -1,3 +1,4 @@
+using BGJ_2025_2.Game.Items;
 using BGJ_2025_2.Game.Levels;
 using UnityEngine;
 
@@ -97,8 +98,17 @@ namespace BGJ_2025_2.Game.Players
             if (_isFired) return;
 
             _data.Days = _game.Day;
+            _data.Cookies += CookieJar.DefaultCookieCount - _game.Office.CookieJar.CookieCount;
             _data.Tasks += _game.Tasks.FinishedTaskCount;
             _isFired = true;
+
+            /*
+            Debug.Log($"Day: {_game.Day}, " +
+                $"cookies: {_data.Cookies}, " +
+                $"calc cookies: {CookieJar.DefaultCookieCount - _game.Office.CookieJar.CookieCount}, " +
+                $"tasks: {_data.Tasks}, " +
+                $"task count: {_game.Tasks.FinishedTaskCount}");
+            */
 
             _game.End();
         }

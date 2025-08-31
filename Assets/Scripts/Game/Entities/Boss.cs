@@ -95,7 +95,7 @@ namespace BGJ_2025_2.Game.Entities
         {
             if (collision.gameObject.CompareTag(_PlayerTag))
             {
-                if (_isChasing && !(_office.Game.Tasks.FinishedTaskCount == TaskHandler.MinTaskCount && _office.CookieJar.IsEmpty))
+                if (_isChasing && !(_office.Game.Tasks.FinishedTaskCount >= TaskHandler.MinTaskCount && _office.CookieJar.IsEmpty))
                 {
                     _office.Player.Fire();
                 }

@@ -18,6 +18,7 @@ namespace BGJ_2025_2.GUI.Finish
         private const string _TasksQuantifier = "task";
 
         [SerializeField] private TextMeshProUGUI _summaryLabel;
+        [SerializeField][TextArea(7, 10)] private string _baseText;
 
 
         // Methods
@@ -30,7 +31,7 @@ namespace BGJ_2025_2.GUI.Finish
 
         public override void SetUp()
         {
-            _summaryLabel.SetText(_summaryLabel.text
+            _summaryLabel.SetText(_baseText
                 .Replace(_DaysPlaceholder, Player.Data.Days.ToString())
                 .Replace(_DaysQuantifierPlaceholder, $"{_DaysQuantifier}{(Player.Data.Days != 1 ? "s" : "")}")
                 .Replace(_CookiesPlaceholder, Player.Data.Cookies.ToString())

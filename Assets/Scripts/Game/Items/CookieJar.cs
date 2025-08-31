@@ -45,11 +45,10 @@ namespace BGJ_2025_2.Game.Items
 
             TakeOut();
 
-            ++_office.Player.Data.Cookies;
             _office.Player.Audio.Eat();
             _office.Boss.NotifyFromCookieJar();
 
-            if (IsEmpty && _office.Game.Tasks.FinishedTaskCount == TaskHandler.MinTaskCount)
+            if (IsEmpty && _office.Game.Tasks.FinishedTaskCount >= TaskHandler.MinTaskCount)
             {
                 _office.Game.EndDay();
             }

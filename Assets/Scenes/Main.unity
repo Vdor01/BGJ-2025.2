@@ -6050,9 +6050,7 @@ MonoBehaviour:
 
     Sadly, you did not
     meet expectations, especially Gilbert''s expectations. (He really likes his cookies,
-    you know.) That''s why we need to let you go with immediate effect.
-
-'
+    you know.) That''s why we need to let you go with immediate effect.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2eed93a0ebb53024792d91e0b0089bad, type: 2}
   m_sharedMaterial: {fileID: 8141365855448177545, guid: 2eed93a0ebb53024792d91e0b0089bad, type: 2}
@@ -17272,6 +17270,14 @@ MonoBehaviour:
   _gui: {fileID: 269343645}
   _defaultSelectable: {fileID: 0}
   _summaryLabel: {fileID: 217003217}
+  _baseText: 'During your <b>#DAYS#</b> #DAYS_QUANTIFIER# at the company, you managed
+    to eat <b>#COOKIES#</b> #COOKIES_QUANTIFIER# while completing <b>#TASKS#</b>
+    #TASKS_QUANTIFIER#. Well done, or something like that.
+
+
+    Sadly, you did not
+    meet expectations, especially Gilbert''s expectations. (He really likes his cookies,
+    you know.) That''s why we need to let you go with immediate effect.'
 --- !u!224 &555956543
 RectTransform:
   m_ObjectHideFlags: 0
@@ -39919,7 +39925,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1419079930}
   _camera: {fileID: 1211538832}
-  _lookSensitivity: 2
+  _lookSensitivity: 3
 --- !u!4 &1230725120
 Transform:
   m_ObjectHideFlags: 0
@@ -44480,7 +44486,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8746416897846849540, guid: cd4feed3a2d32a244a1896b802adb24c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.2127861
+      value: -1.638
       objectReference: {fileID: 0}
     - target: {fileID: 8746416897846849540, guid: cd4feed3a2d32a244a1896b802adb24c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -53816,7 +53822,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5624248449903732405, guid: ac0d8a16d1873824c9296016b45ef669, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.749
+      value: -2.174214
       objectReference: {fileID: 0}
     - target: {fileID: 5624248449903732405, guid: ac0d8a16d1873824c9296016b45ef669, type: 3}
       propertyPath: m_LocalPosition.y
