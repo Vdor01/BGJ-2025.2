@@ -89,7 +89,7 @@ namespace BGJ_2025_2.Game.Players
 
         public void NextDay()
         {
-            transform.position = _game.Office.Kitchen.Center + Vector3.up;
+            Reload();
         }
 
         public void Fire()
@@ -97,6 +97,7 @@ namespace BGJ_2025_2.Game.Players
             if (_isFired) return;
 
             _data.Days = _game.Day;
+            _data.Tasks += _game.Tasks.FinishedTaskCount;
             _isFired = true;
 
             _game.End();

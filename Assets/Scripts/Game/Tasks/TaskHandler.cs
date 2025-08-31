@@ -9,6 +9,8 @@ namespace BGJ_2025_2.Game.Tasks
     public class TaskHandler : MonoBehaviour
     {
         // Fields
+        public const int MinTaskCount = 5;
+
         [SerializeField] private GameManager _game;
 
         [Header("Config")]
@@ -26,6 +28,9 @@ namespace BGJ_2025_2.Game.Tasks
         private List<Task> activeTasks;
 
         private int finishedTaskCount = 0;
+
+
+        public int FinishedTaskCount => finishedTaskCount;
 
         private void Awake()
         {
@@ -72,7 +77,9 @@ namespace BGJ_2025_2.Game.Tasks
 
         private void StartTask(string id)
         {
+#if UNITY_EDITOR
             Debug.Log("Starting task with id: " + id);
+#endif
 
             Task task = GetTaskById(id);
             task.InstantiateCurrentTaskStep(this.transform);
@@ -83,7 +90,9 @@ namespace BGJ_2025_2.Game.Tasks
 
         private void AdvanceTask(string id)
         {
+#if UNITY_EDITOR
             Debug.Log("Advancing task with id: " + id);
+#endif
 
             Task task = GetTaskById(id);
 
@@ -103,7 +112,9 @@ namespace BGJ_2025_2.Game.Tasks
 
         private void FinishTask(string id)
         {
+#if UNITY_EDITOR
             Debug.Log("Finishing task with id: " + id);
+#endif
 
             Task task = GetTaskById(id);
 
@@ -122,7 +133,7 @@ namespace BGJ_2025_2.Game.Tasks
             ChangeTaskState(task.info.id, TaskState.FINISHED);
 
             // Update UI
-            taskToday.GetComponent<TextMeshProUGUI>().SetText($"Tasks done today: {finishedTaskCount} / 5");
+            taskToday.GetComponent<TextMeshProUGUI>().SetText($"Tasks done today: {finishedTaskCount} / {MinTaskCount}");
 
             // Check if we need to reset all finished tasks
             int remainingUnusedTasks = 0;
@@ -130,8 +141,9 @@ namespace BGJ_2025_2.Game.Tasks
             {
                 if (!used) remainingUnusedTasks++;
             }
-
+#if UNITY_EDITOR
             Debug.Log($"Remaining unused tasks: {remainingUnusedTasks}, activeTaskNumber: {activeTaskNumber}");
+#endif
 
             if (remainingUnusedTasks < activeTaskNumber)
             {
@@ -143,13 +155,22 @@ namespace BGJ_2025_2.Game.Tasks
                     {
                         taskTab[taskId] = false;
                         ChangeTaskState(taskId, TaskState.NOT_AVAILABLE);
+#if UNITY_EDITOR
                         Debug.LogWarning($"Resetting taskTab for taskId: {taskId}");
+#endif
                     }
                 }
+#if UNITY_EDITOR
                 Debug.Log("Not enough unused tasks available, resetting all finished tasks.");
+#endif
             }
 
             ManageActiveTasks();
+
+            if (_game.Office.CookieJar.IsEmpty)
+            {
+                _game.EndDay();
+            }
         }
 
         private void ManageActiveTasks()
@@ -173,7 +194,9 @@ namespace BGJ_2025_2.Game.Tasks
 
                     if (!hasUnusedTasks)
                     {
+#if UNITY_EDITOR
                         Debug.LogWarning("No unused tasks available to fill active task slots!");
+#endif
                         break; // Exit the while loop to prevent infinite loop
                     }
 
@@ -187,14 +210,18 @@ namespace BGJ_2025_2.Game.Tasks
                         attempts++;
                         if (attempts > taskIds.Count * 2) // Safety check to prevent infinite loop
                         {
+#if UNITY_EDITOR
                             Debug.LogError("Unable to find an unused task after multiple attempts!");
+#endif
                             break;
                         }
                     }
 
                     if (taskTab[randomTaskId] == false) // Only proceed if we found an unused task
                     {
+#if UNITY_EDITOR
                         Debug.Log("Randomly selected task id: " + randomTaskId);
+#endif
                         // You can now use randomTaskId to start or process the task
                         ChangeTaskState(randomTaskId, TaskState.CAN_START);
                         taskTab[randomTaskId] = true;
@@ -261,7 +288,9 @@ namespace BGJ_2025_2.Game.Tasks
             {
                 if (idToTaskMap.ContainsKey(taskInfo.id))
                 {
+#if UNITY_EDITOR
                     Debug.LogWarning("Duplicate TaskInfoSO id found: " + taskInfo.id + ". Please ensure all TaskInfoSO ids are unique.");
+#endif
                 }
                 idToTaskMap.Add(taskInfo.id, new Task(taskInfo));
                 //Debug.Log("Loaded task: " + taskInfo.name);
@@ -274,9 +303,27 @@ namespace BGJ_2025_2.Game.Tasks
             Task task = taskMap[id];
             if (task == null)
             {
+#if UNITY_EDITOR
                 Debug.LogError("No task found with id: " + id);
+#endif
             }
             return task;
+        }
+
+        public void ClearFinishedTaskCount()
+        {
+            finishedTaskCount = 0;
+        }
+
+        public void Clear()
+        {
+            for (int i = activeTasks.Count - 1; i >= 0; --i)
+            {
+                FinishTask(activeTasks[i].info.id);
+            }
+            finishedTaskCount = 0;
+
+            taskToday.GetComponent<TextMeshProUGUI>().SetText($"Tasks done today: {finishedTaskCount} / {MinTaskCount}");
         }
     }
 }

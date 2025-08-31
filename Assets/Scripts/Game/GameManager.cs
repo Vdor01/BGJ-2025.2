@@ -69,7 +69,7 @@ namespace BGJ_2025_2.Game
 
         private void Update()
         {
-            if (_isRunning)
+            if (_isRunning && !_isPaused)
             {
                 _elapsedTime += Time.deltaTime;
 
@@ -119,11 +119,11 @@ namespace BGJ_2025_2.Game
 
                 Cursor.lockState = CursorLockMode.None;
 
-                _player.gameObject.SetActive(false);
                 _player.End();
+                _player.gameObject.SetActive(false);
 
-                _office.Boss.gameObject.SetActive(false);
                 _office.Boss.End();
+                _office.Boss.gameObject.SetActive(false);
 
                 _gui.OverlayMenu.CloseMap();
                 _gui.OverlayMenu.Close();
@@ -156,21 +156,37 @@ namespace BGJ_2025_2.Game
             _office.Boss.Reload();
 
             _office.CookieJar.Reload();
-            // TODO: taskokat reload-olni?
+
+            _tasks.Clear();
 
             _elapsedTime = 0f;
         }
 
         public void NextDay()
         {
+            _elapsedTime = 0f;
+            _isPaused = true;
+            _gui.TransitionPanel.TransitionInAndOut(() =>
+            {
+                Reload();
+                _isPaused = false;
+            }, null, $"Day {_day + 1}");
             ++_day;
-
-            Reload();
         }
 
         public void EndDay()
         {
-            NextDay();
+            _player.Data.Tasks += _tasks.FinishedTaskCount;
+            _player.Data.Days += 1;
+
+            if (_tasks.FinishedTaskCount < TaskHandler.MinTaskCount)
+            {
+                End();
+            }
+            else
+            {
+                NextDay();
+            }
         }
 
         public void EnableMenuRoom()

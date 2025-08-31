@@ -1,5 +1,6 @@
 using BGJ_2025_2.Game.Interactions;
 using BGJ_2025_2.Game.Levels;
+using BGJ_2025_2.Game.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -94,7 +95,7 @@ namespace BGJ_2025_2.Game.Entities
         {
             if (collision.gameObject.CompareTag(_PlayerTag))
             {
-                if (_isChasing)
+                if (_isChasing && !(_office.Game.Tasks.FinishedTaskCount == TaskHandler.MinTaskCount && _office.CookieJar.IsEmpty))
                 {
                     _office.Player.Fire();
                 }
@@ -490,7 +491,7 @@ namespace BGJ_2025_2.Game.Entities
 
         public void End()
         {
-
+            StopChasingPlayer();
         }
 
         public void Pause()

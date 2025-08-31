@@ -1,5 +1,6 @@
 using BGJ_2025_2.Game.Interactions;
 using BGJ_2025_2.Game.Levels;
+using BGJ_2025_2.Game.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,9 +49,9 @@ namespace BGJ_2025_2.Game.Items
             _office.Player.Audio.Eat();
             _office.Boss.NotifyFromCookieJar();
 
-            if (IsEmpty)
+            if (IsEmpty && _office.Game.Tasks.FinishedTaskCount == TaskHandler.MinTaskCount)
             {
-                _office.Game.NextDay();
+                _office.Game.EndDay();
             }
         }
 
@@ -100,7 +101,7 @@ namespace BGJ_2025_2.Game.Items
 
         public void Reload()
         {
-            AddSome(CookieCount - _cookies.Count);
+            AddSome(DefaultCookieCount - _cookies.Count);
         }
     }
 }

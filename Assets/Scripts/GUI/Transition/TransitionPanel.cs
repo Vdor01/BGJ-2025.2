@@ -48,6 +48,8 @@ namespace BGJ_2025_2.GUI
             if (_skip)
             {
                 actionAfter?.Invoke();
+
+                StopAllCoroutines();
                 gameObject.SetActive(false);
 
                 return;
@@ -65,6 +67,8 @@ namespace BGJ_2025_2.GUI
             if (_skip)
             {
                 actionAfter?.Invoke();
+
+                StopAllCoroutines();
                 gameObject.SetActive(false);
 
                 return;
